@@ -25,7 +25,7 @@ int main(){
             break;
         default:
             // El Operador no concuerda con ninguno de (+, -, *, /)
-            cout << "Error! El Operador no es correcto"
+            cout << "Error! El Operador no es correcto";
             break;
     }
 
