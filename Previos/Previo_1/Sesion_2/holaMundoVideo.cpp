@@ -1,0 +1,15 @@
+#include <iostream>
+
+int main(){
+    std:: cout << "Hola mundo, terrestres del IE0217!\n";
+
+    int var1 = 0;
+    int var2;
+
+    var2 = (var1 == 3) ? 15 : 27;
+
+    std::cout << "var2: \n" << var2 << "";
+    
+
+    return 0;
+}
