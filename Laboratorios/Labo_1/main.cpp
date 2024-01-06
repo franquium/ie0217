@@ -9,6 +9,8 @@ int main(){
     while (1)
     {
         mostrarMenu();
+        procesarOpcion(empleados, numEmpleados);
+        
     }
     
 

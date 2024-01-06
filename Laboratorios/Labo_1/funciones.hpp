@@ -4,6 +4,7 @@
 
 #include <iostream>
 
+// Maximo 10 empleados
 const int MAX_EMPLEADOS = 10;
 
 struct Empleado {
@@ -14,6 +15,9 @@ struct Empleado {
 };
 
 void mostrarMenu();
-void procesarOpcion();
+void procesarOpcion(Empleado empleados[], int &numEmpleados);
+void agregarEmpleado(Empleado empleados[], int &numEmpleados);
+void listarEmpleados(const Empleado empleados[], int &numEmpleados);
+void eliminarEmpleados(Empleado empleados[], int &numEmpleados);
 
 #endif
