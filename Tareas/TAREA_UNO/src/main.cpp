@@ -6,6 +6,8 @@
  * inicializando los valores predeterminados y ejecuta el loop principal del juego. 
  * Dentro del loop, muestra el menu y procesa las opciones seleccionadas por el usuario.
  * 
+ * @return int Retorna 0 si el programa finaliza correctamente.
+ *
  * @copyright Copyleft
  * 
  */
