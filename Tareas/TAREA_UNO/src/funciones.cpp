@@ -9,12 +9,16 @@ using namespace std;
 
 
 /*  Funcion generar el numero aleatorio dentro del intervalo */
-int generarNumeroRandom(Juego datos){
+int generarNumeroRandom(Juego& datos){
     int numRandom;
-    std::srand(std::time(NULL)); // Inicializa seed de la funcion srand
+    srand((unsigned) time(NULL)); // Inicializa seed de la funcion srand
     
-    numRandom = datos.numMin + std::rand() % ((datos.numMax - datos.numMax) + 1);
+    numRandom = datos.numMin + rand() % ((datos.numMax - datos.numMin) + 1);
     datos.numAdivinar = numRandom;
+
+    // Codigo para impresion del numero aleatorio en la terminal
+    // para motivos de debuggeo
+    // std::cout << "Num es: "<< datos.numAdivinar << '\n';
 
     return numRandom;
 }
@@ -32,7 +36,7 @@ int getNumeroUsuario(){
 
 
 /*  Funcion para calcular el numero de intentos */
-int calcularNumIntentos(Juego datos){
+int calcularNumIntentos(Juego& datos){
     int numIntentos;
 
     numIntentos = std::ceil((datos.numMax - datos.numMin) / 3.0);
@@ -42,7 +46,7 @@ int calcularNumIntentos(Juego datos){
 
 /*  Funcion para mostrar el Menu */
 void mostrarMenu(){
-    std::cout << "\n--- Menu ---\n";
+    std::cout << "\n--- Menu Principal ---\n";
     std::cout << "1. Intervalo de valores deseados\n";
     std::cout << "2. Nivel de dificultad\n";
      std::cout << "3. Iniciar juego\n";
@@ -51,11 +55,11 @@ void mostrarMenu(){
 
 
 /*  Funcion para procesar las opciones ingresadas */
-void procesarOpcion(Juego datos){
+void procesarOpcion(Juego& datos){
     int opcion;
     int dificultad;
-    int min;
-    int max;
+    // int min;
+    // int max;
     int numRand;
     std::cout << "Ingrese una opcion: ";
     std::cin >> opcion;
@@ -63,13 +67,19 @@ void procesarOpcion(Juego datos){
     // Casos
     switch(opcion){
         case 1: // Intervalo de valores deseados
-            // code 
+            std::cout << "Ingrese el limite inferior del intervalo: \n"; 
+            std::cin >> datos.numMin;
+            
+            std::cout << "Ingrese el limite superior del intervalo: \n"; 
+            std::cin >> datos.numMax;
+            std::cout << "Volviendo al Menu Principal..." << endl;
             break;
         case 2: // Nivel de dificultad
             std::cout << "Ingrese modo dificultad: \n";
             std::cout << "1. Modo Estandar\n";
             std::cout << "2. Modo dificil\n";
             std::cin >> datos.modo;
+            std::cout << "Volviendo al Menu Principal..." << endl;
             //datos.modo = dificultad;
             break;
         case 3: // Iniciar juego
@@ -85,7 +95,7 @@ void procesarOpcion(Juego datos){
 
 
 /*  Funcion para el modo de juego estadar */
-void jugarModoEstandar(Juego datos){
+void jugarModoEstandar(Juego& datos){
         int intentos = 0; // Contador del numero de intentos
         int maximosIntentos = calcularNumIntentos(datos);
         int numGanador = generarNumeroRandom(datos);
@@ -96,24 +106,24 @@ void jugarModoEstandar(Juego datos){
             int numDigitado =  getNumeroUsuario();
             intentos++;
             if (numDigitado == numGanador) {
-                std::cout << "¡Correcto! Has adivinado el número correcto." << std::endl;
+                std::cout << "Correcto!!! Has adivinado el numero correcto." << std::endl;
                 return;
             } else if (numDigitado < numGanador) {
-                std::cout << "El número secreto es mayor al ingresado." << std::endl;
+                std::cout << "El numero secreto es mayor al ingresado." << std::endl;
             } else {
-                std::cout << "El número secreto es menor al ingresado." << std::endl;
+                std::cout << "El numero secreto es menor al ingresado." << std::endl;
             }
         }
 
 
-        std::cout << "Has perdido. El número era: " << datos.numAdivinar << std::endl;
+        std::cout << "Has perdido. El numero era: " << datos.numAdivinar << std::endl;
         
         
     }
 
 /*  Funcion para el modo de juego dificil */
-void jugarModoDificil(Juego datos){
-        int intentos;
+void jugarModoDificil(Juego& datos){
+        int intentos = 0;
         int maximosIntentos = calcularNumIntentos(datos);
         int numGanador = generarNumeroRandom(datos);
         
@@ -124,13 +134,6 @@ void jugarModoDificil(Juego datos){
         int caliente =  std::ceil((largoIntervalo) * 0.3); // 30 % del largo del intervalo
         int hirviendo =  std::ceil((largoIntervalo) * 0.1); // 10 % del largo del intervalo
 
-        /**
-         * Congelado > 0.80 del Intervalo
-         * Frio > 0.50 del Intervalo
-         *  Caliente = 0.30 del Intervalo
-         *  Hirviendo = 0.10 del intervalor
-         * 
-        */
 
        // ciclo de juego mientras intentos < maximosIntentos
         while (intentos < maximosIntentos)
@@ -140,7 +143,7 @@ void jugarModoDificil(Juego datos){
             // Declarando una variable de distancia para saber que tan cerca se esta del numero ganador
             int distancia = std::abs(numGanador - numDigitado);
             if (distancia == 0) {
-                std::cout << "¡Correcto! Has adivinado el número correcto." << std::endl;
+                std::cout << "Correcto!!! Has adivinado el numero correcto." << std::endl;
                 return;
             } 
             else if (distancia <= hirviendo) {
@@ -166,7 +169,7 @@ void jugarModoDificil(Juego datos){
 
 
 /*  Funcion para iniciar el juego*/
-void iniciarJuego(Juego datos){
+void iniciarJuego(Juego& datos){
     int modoDificultad = datos.modo;
     
     modoDificultad == 1 ? jugarModoEstandar(datos) : jugarModoDificil(datos);

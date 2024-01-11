@@ -13,12 +13,12 @@ struct Juego {
 };
 
 void mostrarMenu();
-void procesarOpcion(Juego datos);
-void iniciarJuego(Juego datos);
-void jugarModoEstandar(Juego datos);
-void jugarModoDificil(Juego datos);
-int generarNumeroRandom(Juego datos);
+void procesarOpcion(Juego& datos);
+void iniciarJuego(Juego& datos);
+void jugarModoEstandar(Juego& datos);
+void jugarModoDificil(Juego& datos);
+int generarNumeroRandom(Juego& datos);
 int getNumeroUsuario();
-int calcularNumIntentos(Juego datos);
+int calcularNumIntentos(Juego& datos);
 
 #endif
