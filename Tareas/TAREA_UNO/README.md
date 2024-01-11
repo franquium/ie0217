@@ -34,6 +34,7 @@ Su programa deberia correr satisfactoriamente. ``` Mischief managed! :-)```
 
 
 1. ¿Cual es la principal diferencia entre C y C++?
+
 La principal diferencia entre C y C++ consiste en que en el lenguaje C está orientado a la programación estructurada, es decir, en un conjunto de sentencias o instrucciones que se ejecutan una por una. En este lenguaje se procesan unos datos de entrada para obtener unos de salida. Mientras que C++ es un lenguaje de programación orientada a objetos, en el que se crean los objetos para luego solicitarles que hagan los métodos por sí solos. [1]
 
 2. ¿Cuales son las diferencias fundamentales entre un lenguaje de programacion compilado y uno interpretado?
