@@ -246,7 +246,7 @@ Se utiliza para especificar los objetivos que no son archivos, pueden ser comand
 [3] https://barcelonageeks.com/tipos-de-datos-c/ 
 [4] Material del curso en MV.
 [5] https://www.genbeta.com/desarrollo/estructura-del-codigo-fuente-en-c 
-[]
+
 
 
 
