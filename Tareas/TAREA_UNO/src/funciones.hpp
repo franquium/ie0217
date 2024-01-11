@@ -19,5 +19,6 @@ void generarNumeroRandom();
 void jugarModoEstandar();
 void jugarModoDificil();
 int getNumeroUsuario();
+int calcularNumIntentos();
 
 #endif
