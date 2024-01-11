@@ -237,7 +237,7 @@ void jugarModoDificil(Juego datos){
     }
 
 
-/*  Funcion para iniciar el juego*/
+
 /**
  * @brief Funcion para iniciar el juego en el modo de dificultad elegido.
  *
