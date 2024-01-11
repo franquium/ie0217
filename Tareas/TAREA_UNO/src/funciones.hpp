@@ -1,6 +1,6 @@
 /**
  * @file funciones.hpp
- * * @author J. Antonio Franchi 
+ * @author J. Antonio Franchi 
  * @brief Archivo de headers de funciones
  * Contiene los headers de las funciones del juego,
  * asi como la definicion del Struct Juego para los datos requeridos en el juego.
@@ -14,7 +14,13 @@
 #include <string>
 #include <iostream>
 
-// Declarando el struct para los datos del juego
+/**
+ * @struct Juego
+ * @brief Almacena los datos del estado del juego de adivinar.
+ *
+ * Esta estructura almacena los detalles del juego, como el rango de números para adivinar,
+ * el modo de juego seleccionado y el número que el jugador debe adivinar.
+ */
 struct Juego {
     int numMin; // Cota inferior del intervalo
     int numMax; // Cota superior del intervalo
