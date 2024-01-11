@@ -4,15 +4,29 @@ Repositorio para la Tarea 1 del curso de Estructuras Abstractas de Datos y Algor
 
 ## Para correr el programa
 
-Para correr el programa desde la terminal de VSCode o similares, primero tiene que instalar el compilar g++
+Para correr el programa desde la terminal de VSCode u otra, primero tiene que verificar que tenga instalado el compilar g++ en su dispositivo, para ello corra en la terminal:
 
 ```bash
-
-g++ -o salida.exe .\main.cpp .\funciones.cpp
-
+g++ --version
 ```
 
+De no aparacer un mensaje en terminal indicando la version instalada junto con otra info en un cajetin, proceda a instalarlo segun su OS, recuerde GIYF.
 
+Seguidamente, verifique que tenga instalado el Make en su dispositivo, para ello corra en la terminal:
+
+```bash
+make --version
+```
+
+De no aparacer un mensaje en terminal indicando la version instalada junto con otra info en un cajetin, proceda a instalarlo segun su OS, recuerde GIYF.
+
+Una vez verificado lo anterior, proceda acceder desde su terminal el directorio src con los archivos, y para correr el programa escriba en la terminal el comando:
+
+```bash
+make 
+```
+
+Su programa deberia correr satisfactoriamente. ``` Mischief managed! :-)```
 
 
 ## Parte Teórica C++
@@ -132,3 +146,10 @@ makefile?
 
 7. ¿Para que se utiliza .PHONY en un Makefile?
 
+
+
+```
+
+En palabras del profeta Borgues: "Que parida!"
+
+```
