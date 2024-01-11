@@ -90,7 +90,16 @@ void mostrarMenu(){
 }
 
 
-/*  Funcion para procesar las opciones ingresadas */
+/**
+ * @brief Funcion que procesa la eleccion del usuario en el menu principal.
+ *
+ * Esta funcion solicita y lee la opcion del usuario e implementa la logica correspondiente
+ * basada en la seleccion realizada. Las opciones incluyen establecer el intervalo de valores,
+ * seleccionar el nivel de dificultad, iniciar el juego, o salir del programa.
+ *
+ * @param datos El struct Juego que contiene el estado actual del juego.
+ *              Se actualiza segun las elecciones del usuario.
+ */
 void procesarOpcion(Juego datos){
     int opcion;
     int dificultad;
@@ -105,11 +114,11 @@ void procesarOpcion(Juego datos){
         case 1: // Intervalo de valores deseados
             std::cout << "Ingrese el limite inferior del intervalo: \n"; 
             std::cin >> datos.numMin;
-            
             std::cout << "Ingrese el limite superior del intervalo: \n"; 
             std::cin >> datos.numMax;
             std::cout << "Volviendo al Menu Principal..." << endl;
             break;
+
         case 2: // Nivel de dificultad
             std::cout << "Ingrese modo dificultad: \n";
             std::cout << "1. Modo Estandar\n";
@@ -118,25 +127,37 @@ void procesarOpcion(Juego datos){
             std::cout << "Volviendo al Menu Principal..." << endl;
             //datos.modo = dificultad;
             break;
+
         case 3: // Iniciar juego
             iniciarJuego(datos);
             break;
+
         case 4: // Salir del programa
             std::cout << "Saliendo del programa...\n";
             exit(0);
+
         default:
             std::cout << "Opcion no es valida. Intente de nuevo...\n";
     }
 }
 
 
-/*  Funcion para el modo de juego estadar */
+/**
+ * @brief Funcion para ejecutar el juego en el modo estandar.
+ *
+ * En este modo, el usuario intenta adivinar un numero desconocido generado aleatoriamente.
+ * La funcion informa al usuario si su intento es mayor o menor que el numero desconocido.
+ * El juego sigue hasta que el usuario adivina correctamente o se agotan los intentos.
+ *
+ * @param datos El struct Juego que contiene el estado actual del juego, incluyendo
+ *              el numero desconocido a adivinar y los limites del intervalo de numeros.
+ */
 void jugarModoEstandar(Juego datos){
         int intentos = 0; // Contador del numero de intentos
         int maximosIntentos = calcularNumIntentos(datos);
         int numGanador = generarNumeroRandom(datos);
 
-        // ciclo de juego mientras intentos < maximosIntentos
+        // ciclo de juego mientras intentos sean menores que los maximos intentos
         while (intentos < maximosIntentos)
         {
             int numDigitado =  getNumeroUsuario();
@@ -150,28 +171,43 @@ void jugarModoEstandar(Juego datos){
                 std::cout << "El numero secreto es menor al ingresado." << std::endl;
             }
         }
-
-
-        std::cout << "Has perdido. El numero era: " << datos.numAdivinar << std::endl;
-        
+        // Mensaje mostrado cuando se agotan los intentos y se pierde el juego
+        std::cout << "Has perdido. El numero era: " << numGanador << std::endl;
         
     }
 
-/*  Funcion para el modo de juego dificil */
+
+
+/**
+ * @brief Funcion para ejecutar el juego en el modo dificil.
+ *
+ * En este modo, el usuario intenta adivinar un numero desconcido generado aleatoriamente.
+ * La funcion proporciona pistas basadas en que tan cerca esta el intento del numero desconocido,
+ * utilizando terminos como "Hirviendo", "Caliente", "Frio" o "Congelado".
+ * El juego continua hasta que el usuario adivina correctamente o se agotan los intentos.
+ *
+ * @param datos El struct Juego que contiene el estado actual del juego, incluyendo
+ *              el numero desconocido a adivinar y los limites del intervalo de numeros.
+ */
 void jugarModoDificil(Juego datos){
         int intentos = 0;
         int maximosIntentos = calcularNumIntentos(datos);
         int numGanador = generarNumeroRandom(datos);
         
         int largoIntervalo = ((datos.numMax - datos.numMin) + 1);
-        // Para los niveles de proximidad
-        //int congelado =  std::ceil((largoIntervalo) * 0.8); // 80 % del largo del intervalo
-        int frio =  std::ceil((largoIntervalo) * 0.6); // 60 % del largo del intervalo
-        int caliente =  std::ceil((largoIntervalo) * 0.3); // 30 % del largo del intervalo
-        int hirviendo =  std::ceil((largoIntervalo) * 0.1); // 10 % del largo del intervalo
+        /**< Para los niveles de proximidad
+         * hirviendo < 10 % del largo del intervalo
+         * caliente entre 10 % y 30 %
+         * frio entre 30 % y 60 %
+         * congelado > 60 %
+        */
+        //int congelado =  std::ceil((largoIntervalo) * 0.8); 
+        int frio =  std::ceil((largoIntervalo) * 0.6); 
+        int caliente =  std::ceil((largoIntervalo) * 0.3); 
+        int hirviendo =  std::ceil((largoIntervalo) * 0.1); 
 
 
-       // ciclo de juego mientras intentos < maximosIntentos
+       // Ciclo de juego mientras intentos sean menores que los maximos intentos
         while (intentos < maximosIntentos)
         {
             int numDigitado =  getNumeroUsuario();
@@ -194,22 +230,27 @@ void jugarModoDificil(Juego datos){
             else if (distancia > frio) {
                 std::cout << "Congelado!!!." << std::endl;
             } 
-            //else {
-            //    std::cout << "El número secreto es menor al ingresado." << std::endl;
-            //}
-
         }
-        std::cout << "Has perdido. El número era: " << numGanador << std::endl;
+        // Mensaje mostrado cuando se agotan los intentos y se pierde el juego
+        std::cout << "Has perdido. El numero era: " << numGanador << std::endl;
 
     }
 
 
 /*  Funcion para iniciar el juego*/
+/**
+ * @brief Funcion para iniciar el juego en el modo de dificultad elegido.
+ *
+ * Dependiendo del modo de dificultad almacenado en la estructura Juego,
+ * esta funcion inicia el juego en el modo estandar o en el modo dificil.
+ *
+ * @param datos El struct Juego que contiene el estado actual del juego,
+ *              incluyendo el modo de dificultad seleccionado.
+ */
 void iniciarJuego(Juego datos){
     int modoDificultad = datos.modo;
-    
+    // Usando el Operador ternario para selecion de modos de juego
     modoDificultad == 1 ? jugarModoEstandar(datos) : jugarModoDificil(datos);
-
     }
 
 
