@@ -1,3 +1,12 @@
+/**
+ * @file funciones.cpp
+ * @author J. Antonio Franchi 
+ * @brief Las funciones del juego
+ * Contiene las distintas funciones requeridas para el funcionamiento del juego.
+ * 
+ * @copyright Copyleft
+ * 
+ */
 #include "funciones.hpp"
 #include <string>
 #include <iostream>
@@ -6,14 +15,19 @@
 #include <cmath>
 using namespace std;
 
-
-
-/*  Funcion generar el numero aleatorio dentro del intervalo */
-int generarNumeroRandom(Juego& datos){
+/**
+ * 
+ * @brief Funcion para generar el numero aleatorio 
+ * Esta funcion toma los datos dentro del struct Juego, y genera el numero aleatorio dentro del intervalo dado.
+ * 
+ * @param datos 
+ * @return int numRandom numero aleatorio dentro del intervalo
+ */
+int generarNumeroRandom(Juego datos){
     int numRandom;
     srand((unsigned) time(NULL)); // Inicializa seed de la funcion srand
     
-    numRandom = datos.numMin + rand() % ((datos.numMax - datos.numMin) + 1);
+    numRandom = datos.numMin + rand() % ((datos.numMax - datos.numMin) + 1); // Calcula el numero aleatorio usando la fn rand dentro del rango
     datos.numAdivinar = numRandom;
 
     // Codigo para impresion del numero aleatorio en la terminal
@@ -24,7 +38,13 @@ int generarNumeroRandom(Juego& datos){
 }
 
 
-/*  Funcion para recibir el numero  ingresado por usuario*/
+/** 
+ * @brief Funcion para recibir un numero ingresado por el usuario.
+ * Solicita al usuario que ingrese un numero por medio de la terminal y lo retorna.
+ * Esta funcion se utiliza para obtener los numeros pnesados del usuario durante el juego.
+ *
+ * @return int El numero ingresado por el usuario.
+ */
 int getNumeroUsuario(){
     int numeroDigitado;
 
@@ -35,8 +55,17 @@ int getNumeroUsuario(){
 }
 
 
-/*  Funcion para calcular el numero de intentos */
-int calcularNumIntentos(Juego& datos){
+
+/**
+ * @brief Funcion para calcular el numero de intentos en el juego
+ * Esta funcion toma la estructura Juego como parametro y calcula el numero maximo de
+ * intentos que tiene el usuario para adivinar el numero correcto. 
+ * El numero de intentos se basa en un tercio del rango del intervalo de numeros.
+ * 
+ * @param datos El struct Juego que contiene los limites del intervalo de numeros.
+ * @return int El numero maximo de intentos calculado.
+ */
+int calcularNumIntentos(Juego datos){
     int numIntentos;
 
     numIntentos = std::ceil((datos.numMax - datos.numMin) / 3.0);
@@ -44,7 +73,14 @@ int calcularNumIntentos(Juego& datos){
     return numIntentos;
 }
 
-/*  Funcion para mostrar el Menu */
+
+/**
+ * @brief Funcion que muestra el menu principal del juego en la terminal.
+ *
+ * Esta funcion imprime las opciones disponibles en el menu principal del juego.
+ * Las opciones incluyen establecer el intervalo de valores, seleccionar el nivel
+ * de dificultad, iniciar el juego, o salir del programa.
+ */
 void mostrarMenu(){
     std::cout << "\n--- Menu Principal ---\n";
     std::cout << "1. Intervalo de valores deseados\n";
@@ -55,7 +91,7 @@ void mostrarMenu(){
 
 
 /*  Funcion para procesar las opciones ingresadas */
-void procesarOpcion(Juego& datos){
+void procesarOpcion(Juego datos){
     int opcion;
     int dificultad;
     // int min;
@@ -95,7 +131,7 @@ void procesarOpcion(Juego& datos){
 
 
 /*  Funcion para el modo de juego estadar */
-void jugarModoEstandar(Juego& datos){
+void jugarModoEstandar(Juego datos){
         int intentos = 0; // Contador del numero de intentos
         int maximosIntentos = calcularNumIntentos(datos);
         int numGanador = generarNumeroRandom(datos);
@@ -122,7 +158,7 @@ void jugarModoEstandar(Juego& datos){
     }
 
 /*  Funcion para el modo de juego dificil */
-void jugarModoDificil(Juego& datos){
+void jugarModoDificil(Juego datos){
         int intentos = 0;
         int maximosIntentos = calcularNumIntentos(datos);
         int numGanador = generarNumeroRandom(datos);
@@ -169,7 +205,7 @@ void jugarModoDificil(Juego& datos){
 
 
 /*  Funcion para iniciar el juego*/
-void iniciarJuego(Juego& datos){
+void iniciarJuego(Juego datos){
     int modoDificultad = datos.modo;
     
     modoDificultad == 1 ? jugarModoEstandar(datos) : jugarModoDificil(datos);
