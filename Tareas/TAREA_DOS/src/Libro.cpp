@@ -13,9 +13,11 @@ using namespace std;
                        materialRelacionado(materialRelacionado)
                        {}
 
+
     // Metodos o funciones 
+
     string Libro::calcularLongitud()  {
-        //Falta codigo
+        //Falta codigo para calcular la longitud
     }
 
     void Libro::imprimirInfo() {
