@@ -31,14 +31,6 @@ class MaterialLectura {
                          string genero, string estado, int cantidadHojas, double precio) ;
                     
 
-        // Creo que esta parte de la inicilizacion va en el .hpp
-        // Constructor de la clase con su lista de inicializacion
-        // MaterialLectura( string titulo, string grupo, string tipoMaterial, string autor,string editorial,
-        //                  string genero, string estado, int cantidadHojas, double precio)
-        //                  : titulo(titulo), grupo(grupo), tipoMaterial(tipoMaterial), autor(autor),
-        //                    editorial(editorial), genero(genero), estado(estado), cantidadHojas(cantidadHojas),
-        //                    precio(precio) {}
-
         // Destructor de la clase
         // ~MaterialLectura()
 };

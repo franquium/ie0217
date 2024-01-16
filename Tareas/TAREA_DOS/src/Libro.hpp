@@ -7,7 +7,6 @@
 using namespace std;
 
 class Libro: public MaterialLectura {
-    // Ver cuales cosas van aca
     /* Hereda de: MaterialLectura.
     * -> Informacion adicional: resumen de contenido, material relacionado que podrıa gustar.
     * -> Funciones:
@@ -30,8 +29,8 @@ class Libro: public MaterialLectura {
                 string resumenContenido, string materialRelacionado);
 
         // Metodos o funciones                 
-        std::string calcularLongitud() ;
-        void imprimirInfo() ;
+        std::string calcularLongitud() const ; // sobre lo const
+        void imprimirInfo() const ;
 
         // Destructor de ;a clase
         //~Libro()

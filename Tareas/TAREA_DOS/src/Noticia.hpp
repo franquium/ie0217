@@ -7,7 +7,6 @@
 using namespace std;
 
 class Noticia: public MaterialLectura {
-    // Ver cuales cosas van aca
     /* Hereda de MaterialLectura.
     * -> Informacion adicional: resumen de contenido, material relacionado que podrıa gustar.
     * -> Funciones:

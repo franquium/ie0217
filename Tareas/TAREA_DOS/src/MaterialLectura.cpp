@@ -32,10 +32,4 @@ using namespace std;
 
 
 
-// void Vehiculo::acelerar(){
-//     cout << "Acelerando el vehiculo hasta " << velocidad << "km/h" << endl;
-// }
 
-// void Vehiculo::frenar(){
-//     cout << "Frenando el vehiculo " << endl;
-// }

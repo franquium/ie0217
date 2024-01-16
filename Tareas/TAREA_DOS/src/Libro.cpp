@@ -1,8 +1,8 @@
 #include "Libro.hpp"
+#include <iostream>
 #include <string>
 using namespace std;
-//#include <iostream>
-//using namespace std;
+#include <iostream>
 
 // Constructor de la clase y la lista de  inicializacion
     Libro::Libro( string titulo, string grupo, string tipoMaterial, string autor,string editorial,
@@ -16,11 +16,18 @@ using namespace std;
 
     // Metodos o funciones 
 
-    string Libro::calcularLongitud()  {
-        //Falta codigo para calcular la longitud
+    string Libro::calcularLongitud() const {
+        //Falta revisar este codigo para calcular la longitud
+        if (cantidadHojas < 100) {
+            return "Corto";
+        } else if (cantidadHojas < 200) {
+            return "Mediano";
+        } else {
+            return "Largo";
+        }
     }
 
-    void Libro::imprimirInfo() {
+    void Libro::imprimirInfo() const {
         cout << "Titulo: " << titulo << endl;
         cout << "Autor: " << autor << endl;
         cout << "Editorial: " << editorial << endl;
