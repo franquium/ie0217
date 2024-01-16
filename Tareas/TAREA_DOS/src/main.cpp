@@ -10,12 +10,33 @@
  * 
  */
 
+#include "Libro.hpp"
 #include <iostream>
 
 
 int main(){
 
-    /* Codigo va aqui*/
+    /* Creando una instancia de la Clase Libro*/
+    Libro miLibro(
+        "El Principito", 
+        "Lectura", 
+        "Libro", 
+        "Antoine de Saint-Exupery",
+        "Editorial C'est la Vie",
+        "Ficcion",
+        "Disponible",
+        97,
+        5000.0,
+        "Un piloto encuentra un amigo en el lugar menos esperado",
+        "Libros de filosofia sobre la vida"
+    );
+    
+    // Imprimir info del libro
+    miLibro.imprimirInfo();
+
+    // Calcular y mostrar la longitud del libro
+    std::string longitud = miLibro.calcularLongitud();
+    std::cout << "Longitud del libro: " << longitud << std::endl;
 
 
     return 0;
