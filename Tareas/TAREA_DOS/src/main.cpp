@@ -14,6 +14,8 @@
 #include "Noticia.hpp"
 #include "Pelicula.hpp"
 #include "Podcast.hpp"
+#include "MaterialOrdenado.hpp"
+#include "MaterialPrecio.hpp"
 #include <iostream>
 
 /**
