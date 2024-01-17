@@ -40,8 +40,11 @@ using namespace std;
     }
 
     void Noticia::imprimirInfo() const {
-
+        cout << "  -------------------------------------  " << endl;
+        cout << "Tipo de Material: " << tipoMaterial << endl;
         cout << "Titulo: " << titulo << endl;
+        cout << "Grupo: " << grupo << endl;
+        cout << "Tipo de Material: " << tipoMaterial << endl;
         cout << "Autor: " << autor << endl;
         cout << "Editorial: " << editorial << endl;
         cout<< "Genero: " << genero << endl;
@@ -50,6 +53,8 @@ using namespace std;
         cout << "Precio: " << precio << endl;
         cout << "Resumen: " << resumenContenido << endl;
         cout << "Material Relacionado: " << materialRelacionado << endl;
+        cout << "  -------------------------------------  " << endl;
+        cout << "\n";
     }
     
 
