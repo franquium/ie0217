@@ -25,7 +25,7 @@ class Pelicula: public MaterialAudiovisual {
         void imprimirInfo() const ;
 
         // Destructor de la clase
-        //~Pelicula()
+        //~Pelicula();
       
 };
 

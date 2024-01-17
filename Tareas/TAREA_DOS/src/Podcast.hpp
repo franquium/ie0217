@@ -25,7 +25,7 @@ class Podcast: public MaterialAudiovisual {
         void imprimirInfo() const ;
 
         // Destructor de la clase
-        //~Podcast()
+        //~Podcast();
       
 };
 
