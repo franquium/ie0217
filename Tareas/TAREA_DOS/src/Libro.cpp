@@ -13,11 +13,10 @@ using namespace std;
                        materialRelacionado(materialRelacionado)
                        {}
 
-
     // Metodos o funciones 
 
     string Libro::calcularLongitud() const {
-        //Falta revisar este codigo para calcular la longitud
+        
         if (cantidadHojas < 100) {
             return "Corto";
         } else if (cantidadHojas < 200) {
@@ -28,6 +27,7 @@ using namespace std;
     }
 
     void Libro::imprimirInfo() const {
+
         cout << "Titulo: " << titulo << endl;
         cout << "Autor: " << autor << endl;
         cout << "Editorial: " << editorial << endl;

@@ -1,5 +1,5 @@
 # Nombres de archivos
-SOURCE_FILES := main.cpp funciones.cpp
+SOURCE_FILES := main.cpp MaterialLectura.cpp Libro.cpp Noticia.cpp
 EXECUTABLE := salida.exe # Nota para Linux la extension del ejecutable es indiferente
 
 # Comando de eliminacion

@@ -7,14 +7,6 @@
 using namespace std;
 
 class Libro: public MaterialLectura {
-    /* Hereda de: MaterialLectura.
-    * -> Informacion adicional: resumen de contenido, material relacionado que podrıa gustar.
-    * -> Funciones:
-    * 1. Metodo que indique si el libro es corto, mediano o largo dependiendo de la cantidad
-    * de hojas (0 a 100 hojas es corto , 100 a 200 hojas es mediano y 200 o mas hojas es
-    * largo).
-    * 2. Metodo que imprima toda la informacion del libro..
-    */
     
     protected:
         // atributos

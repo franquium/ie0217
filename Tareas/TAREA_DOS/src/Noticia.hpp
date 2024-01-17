@@ -6,15 +6,11 @@
 #include "MaterialLectura.hpp"
 using namespace std;
 
+/**
+ * @brief 
+ * 
+ */
 class Noticia: public MaterialLectura {
-    /* Hereda de MaterialLectura.
-    * -> Informacion adicional: resumen de contenido, material relacionado que podrıa gustar.
-    * -> Funciones:
-    * 1. Metodo que indique si la noticia es corto, mediano o largo dependiendo de la cantidad
-    * de hojas (0 a 5 hojas es corta , 5 a 10 hojas es mediana y 10 o mas hojas es larga).
-    * 2. Metodo que imprima toda la informacion del libro..
-    */
-    
     protected:
         // atributos
         std::string resumenContenido;
@@ -31,8 +27,6 @@ class Noticia: public MaterialLectura {
         // Metodos o funciones                 
         std::string calcularLongitud() const;
         void imprimirInfo() const;
-
-        
 
         // Destructor de ;a clase
         //~Libro()

@@ -3,8 +3,22 @@
 #include <string>
 using namespace std;
 
-
 // Constructor de la clase y lista de inicializacion
+/**
+ * @brief Construct a new Noticia:: Noticia object
+ * 
+ * @param titulo 
+ * @param grupo 
+ * @param tipoMaterial 
+ * @param autor 
+ * @param editorial 
+ * @param genero 
+ * @param estado 
+ * @param cantidadHojas 
+ * @param precio 
+ * @param resumenContenido 
+ * @param materialRelacionado 
+ */
     Noticia::Noticia( string titulo, string grupo, string tipoMaterial, string autor,string editorial,
                      string genero, string estado, int cantidadHojas, double precio,
                      string resumenContenido, string materialRelacionado)
@@ -13,43 +27,20 @@ using namespace std;
                        materialRelacionado(materialRelacionado)
                        {}
 
-    /* Forma alternativa sin usar lista de inicializacion con 
-    * this-> atributo = atributo NO FUNKA y no se el proque :/
-    */
-    // Noticia::Noticia(string titulo, string grupo, string tipoMaterial, string autor, string editorial,
-    //          string genero, string estado, int cantidadHojas, double precio,
-    //          string resumenContenido, string materialRelacionado) 
-    //          {
-    //             // Asignacion a los atributos heredados de MaterialLectura
-    //             this->titulo = titulo;
-    //             this->grupo = grupo;
-    //             this->tipoMaterial = tipoMaterial;
-    //             this->autor = autor;
-    //             this->editorial = editorial;
-    //             this->genero = genero;
-    //             this->estado = estado;
-    //             this->cantidadHojas = cantidadHojas;
-    //             this->precio = precio;
-
-    //             // Asignacion directa a los atributos específicos de Libro
-    //             this->resumenContenido = resumenContenido;
-    //             this->materialRelacionado = materialRelacionado;
-    //         }
-    
-
     // Metodos o funciones 
     string Noticia::calcularLongitud() const {
-        //Falta revisar este codigo para calcular la longitud
+       
         if (cantidadHojas < 5) {
-            return "Corto";
+            return "Corta";
         } else if (cantidadHojas < 10) {
-            return "Mediano";
+            return "Mediana";
         } else {
-            return "Largo";
+            return "Larga";
         }
     }
 
     void Noticia::imprimirInfo() const {
+
         cout << "Titulo: " << titulo << endl;
         cout << "Autor: " << autor << endl;
         cout << "Editorial: " << editorial << endl;
