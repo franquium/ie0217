@@ -101,7 +101,7 @@ void Matriz<T>::getTamannoYDatos(){
                 // numComp = std::complex<float>(real, imag);
                 // data[i][j] =  numComp;
                 
-                //return;           
+                return ;           
                 
             } 
             

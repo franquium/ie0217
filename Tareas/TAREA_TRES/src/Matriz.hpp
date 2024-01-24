@@ -29,13 +29,17 @@ class Matriz {
                 );
 
 
-    protected:
-        // atributos de la clase Matriz
+
+       
+        
+        
+
+    public:
+         // atributos de la clase Matriz
         std::vector<std::vector<T>> data; // Almacena los elementos de la matriz.
         int filas;                        // Numero de filas de la matriz.
         int columnas;                     // Numero de columnas de la matriz.
-        
-    public:
+
         /**
          * @brief Constructor para crear una matriz con dimensiones especificas.
          * @param filas Numero de filas de la matriz.
@@ -73,15 +77,7 @@ class Matriz {
          */
         static char pedirTipoOperacion();
         
-        // De un intento fallido de agregar los Numeros Complejos
-        // void addElemento(T& valor, int i, int j);
-        // void addElementoComp(std::complex<float>& valor, int i, int j);
 
-
-        // // Metodos para operaciones matriciales
-        // Matriz<T> operator+(const Matriz<T> &otra) const;
-        // Matriz<T> operator-(const Matriz<T> &otra) const;
-        // Matriz<T> operator*(const Matriz<T>& otra) const;
 
         
 
