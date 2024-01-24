@@ -1,5 +1,12 @@
+/**
+ * @file OperacionesBasicas.cpp
+ * @brief Implementacion de la clase OperacionesBasicas.
+ *
+ * Este archivo contiene la implementacion de las operaciones basicas para la clase Matriz.
+ */
 #include "OperacionesBasicas.hpp"
 
+//Constructor
 template <typename T>
 OperacionesBasicas<T>::OperacionesBasicas(int filas, int columnas) : Matriz<T>(filas, columnas) {}
 
@@ -26,7 +33,7 @@ template <typename T>
 Matriz<T> OperacionesBasicas<T>::operator+(const Matriz<T>& otra) const {
     // Implementacion de la suma
     esSumaORestaValida(otra); // Tira la excepcion si no se cumplen las dimensiones apropiadas para la operacion
-    
+
     // Declarando una variable para guardar el resultado
     Matriz<T> resultado(this->filas, this->columnas);
     for (int i = 0; i < (this->filas); ++i)
