@@ -10,6 +10,10 @@
 
 #include "Matriz.hpp"
 #include "Matriz.cpp"
+#include "OperacionesBasicas.hpp"
+#include "OperacionesBasicas.cpp"
+#include "ImpresionMatriz.hpp"
+#include "ImpresionMatriz.cpp"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -40,31 +44,54 @@ int main() {
         char operacion = miMatriz.pedirTipoOperacion();
         std::cout << "Operacion elegida: " << operacion << std::endl;
 
-        //Matriz tipo float
-        std::cout << ".....Creando una matriz de tipo float ...." << std::endl;
+        // Instanciando segundo matriz de tipo int
+        std::cout << ".....Creando una segunda matriz de tipo int ...." << std::endl;
 
         // Crear instancias de matrices de dimensiones iniciales, se cambiaran despues
-        Matriz<float> miMatriz2(1, 1); // Tipo Float
-        
-       
-        
+        Matriz<int> miMatriz2(1, 1); // Tipo Int
+        // Matriz<float> miMatriz(1, 1); // Tipo Float
+        // Matriz<complex<float>> miMatriz3(1, 1, std::complex<float> (0.0f, 0.0f)); //Tipo complex
+
         // Solicitar al usuario que ingrese los datos de la matriz
         miMatriz2.getTamannoYDatos();
 
         // Solicitar al usuario que elija una operación matematica
         char operacion2 = miMatriz2.pedirTipoOperacion();
-        std::cout << "Operacion elegida: " << operacion << std::endl;
+        std::cout << "Operacion elegida: " << operacion2 << std::endl;
+
+        // Asignar las matrices creadas para la Operacion Basicas
+        int filasA, columnasA;
+        filasA = miMatriz.filas;
+        columnasA = miMatriz.columnas;
+        int filasB, columnasB;
+        filasB= miMatriz2.filas;
+        columnasB = miMatriz2.columnas;
+        OperacionesBasicas<int> matrizA(filasA, columnasA);
+        OperacionesBasicas<int> matrizB(filasB, columnasB);
+
+
+        //Realizar y mostrar la suma de las matrices
+
+        //OperacionesBasicas<int> sumaMatrices = matrizA + matrizB;
+
+
+
+        // // Matriz tipo float
+        // std::cout << ".....Creando una matriz de tipo float ...." << std::endl;
+
+        // // Crear instancias de matrices de dimensiones iniciales, se cambiaran despues
+        // Matriz<float> miMatriz3(1, 1); // Tipo Float
+        
+       
+        
+        // // Solicitar al usuario que ingrese los datos de la matriz
+        // miMatriz2.getTamannoYDatos();
+
+        // // Solicitar al usuario que elija una operación matematica
+        // char operacion3 = miMatriz3.pedirTipoOperacion();
+        // std::cout << "Operacion elegida: " << operacion3 << std::endl;
     
 
-        // // Imprimir matriz
-        // // void imprimirMatriz() {
-        //         for (int i = 0; i < miMatriz.filas; i++) {
-        //             for (int j = 0; j < miMatriz.columnas; j++) {
-        //                 cout << miMatriz.data[i][j] << " ";
-        //             }
-        //             cout << endl;
-        //         }
-        // // }
 
 
     } catch (const std::invalid_argument& e) {

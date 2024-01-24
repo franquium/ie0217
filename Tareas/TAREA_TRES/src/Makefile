@@ -1,5 +1,5 @@
 # Nombres de archivos
-SOURCE_FILES := main.cpp Matriz.cpp 
+SOURCE_FILES := main.cpp Matriz.cpp OperacionesBasicas.cpp ImprimirMatriz.cpp
 EXECUTABLE := salida.exe # Nota para Linux la extension del ejecutable es indiferente
 
 # Comando de eliminacion
