@@ -54,3 +54,51 @@ study_room.breadth = 30.8
 # accediendo al  metodo dentro de clase
 study_room.calculate_area()
 
+
+# Ejem de clase Point
+
+class Point(object):
+    def __new__(cls, *args, **kwargs):
+        print("From new")
+        print(cls)
+        print(args)
+        print(kwargs)
+        # creando nuestro objecto y regresandolo como salida de la func
+        obj = super().__new__(cls)
+        return obj
+
+    def __init__(self, x = 0, y = 0):
+        print("De init")
+        self.x = x
+        self.y = y
+
+# Ejem de clase SpPoint
+
+class SpPoint(Point):
+    MAX_Inst = 4
+    Inst_created = 0
+
+    def __new__(cls, *args, **kwargs):
+        if (cls.Inst_created >= cls.MAX_Inst):
+            raise ValueError("No se puede crear mas objectos")
+        cls.Inst_created += 1
+        return super().__new__(cls)
+
+
+# Ejem de clase Person como muestra de modificadores de Acceso
+# OOP: Encapsulation, Access Modifiers
+
+class Person:
+    def __init__(self, name, age):
+        self.name = name  # publico: sin guion bajo: 
+        self.age = age  # publico
+
+class Person:
+    def __init__(self, name, age):
+        self._name = name  # protected: con un guion bajo: _
+        self._age = age  # protected
+
+class Person:
+    def __init__(self, name, age):
+        self.__name = name  # private: con doble guion bajo: __
+        self.__age = age  # private
