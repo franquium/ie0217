@@ -2,6 +2,7 @@ from student import Student
 from teacher import Teacher
 from course import Course
 
+# Instanciando  objetos con las clases realidas en el labo 4
 student1 = Student("Esteban", 43, "B30754")
 student2 = Student("Maria", 28, "B35149")
 
