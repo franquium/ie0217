@@ -74,7 +74,7 @@ class Interfaz_Usuario:
                     evaluacion = Evaluacion_Especifica(int(puntuacion))
                     evaluacion.mostrar_puntuacion()
                     end_time = timeit.default_timer()  # Finalizar el temporizador de timeit
-                    print(f"Tiempo de ejecucion: {end_time - start_time} s.")
+                    print(f"Tiempo de ejecucion Evaluacion_Especifica: {end_time - start_time} s.")
                 else:
                     print("Por favor, ingrese un número válido.")
             
@@ -122,7 +122,7 @@ class Interfaz_Usuario:
                 evaluacion_general.mostrar_evaluacion_general()
                 
                 end_time = timeit.default_timer()  # Finalizar el temporizador de timeit
-                print(f"Tiempo de ejecucion: {end_time - start_time} s.")
+                print(f"Tiempo de ejecucion de Evaluacion_General: {end_time - start_time} s.")
 
             # Opcion 3:
             elif opcion == '3':
