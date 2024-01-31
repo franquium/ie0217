@@ -3,7 +3,7 @@
 from alergia import Alergia
 from evaluacion_especifica import Evaluacion_Especifica
 from tipos_de_alergias import Tipos_de_Alergias
-
+from evaluacion_general import Evaluacion_General
 # Para pruebas de clase Alergia 
 # Crear una instancia de Alergia
 alergia1 = Alergia("agua", 2048)
@@ -38,3 +38,10 @@ tipo_alergias.agregar_alergia(valor=2048)               # Valor no reconocido
 # Mostrar las alergias del usuario
 tipo_alergias.mostrar_alergias_usuario()
 print("\n")
+tipo_alergias
+
+# Para pruebas de clase Evaluacion_General
+# Usando algunas alergias al tipo_alergias
+evaluacion_general = Evaluacion_General(tipo_alergias)
+evaluacion_general.mostrar_evaluacion_general()
+evaluacion_general.calcular_promedios()
