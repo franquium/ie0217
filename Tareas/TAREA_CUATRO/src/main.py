@@ -13,7 +13,10 @@ from alergia import Alergia
 from evaluacion_especifica import Evaluacion_Especifica
 from tipos_de_alergias import Tipos_de_Alergias
 from evaluacion_general import Evaluacion_General
-
+import timeit
+import cProfile
+import pstats
+import time
 
 # Interfaz de usuario creando una clase
 
@@ -67,8 +70,11 @@ class Interfaz_Usuario:
             if opcion == '1':
                 puntuacion = input("Ingrese su puntuacion general de alergias: ")
                 if puntuacion.isdigit():
+                    start_time = timeit.default_timer()  # Iniciar el temporizador de timeit
                     evaluacion = Evaluacion_Especifica(int(puntuacion))
                     evaluacion.mostrar_puntuacion()
+                    end_time = timeit.default_timer()  # Finalizar el temporizador de timeit
+                    print(f"Tiempo de ejecucion: {end_time - start_time} s.")
                 else:
                     print("Por favor, ingrese un número válido.")
             
@@ -95,6 +101,7 @@ class Interfaz_Usuario:
                     else:
                         print("Error. Por favor, ingrese un número entero o deje en blanco.")
                         continue
+
                     # Agregando a las alergias de usario para realizar los calculos posteriormente
                     tipo_alergias.agregar_alergia(nombre = nombre, valor = valor)
 
@@ -107,10 +114,16 @@ class Interfaz_Usuario:
                 
                 # Mostrar las alergias ingresadas
                 tipo_alergias.mostrar_alergias_usuario()
+
+                start_time = timeit.default_timer()  # Iniciar el temporizador de timeit
+
                 # Instancia de la clase Evaluacion General
                 evaluacion_general = Evaluacion_General(tipo_alergias)
                 evaluacion_general.mostrar_evaluacion_general()
                 
+                end_time = timeit.default_timer()  # Finalizar el temporizador de timeit
+                print(f"Tiempo de ejecucion: {end_time - start_time} s.")
+
             # Opcion 3:
             elif opcion == '3':
                 tipo_alergias = Tipos_de_Alergias()
@@ -139,13 +152,34 @@ class Interfaz_Usuario:
             else:
                 print("Opción no es valida. Por favor, intente de nuevo.")
 
-# Instancia de la clase interfaza
-Interfaz_Usuario.iniciar_interfaz()
+
+# Creando una funcion main que contiene la instancia de 
+# la interfaz de usuario
+def main():
+    # Instancia de la clase interfaza
+    Interfaz_Usuario.iniciar_interfaz() 
+
+
+if __name__ == "__main__":
+    
+    # cProfile.run('main()')
+
+    with cProfile.Profile() as profile:
+        main()
+    profile_result = pstats.Stats(profile)
+    profile_result.sort_stats(pstats.SortKey.TIME)
+    profile_result.print_stats()
 
 
 
 
 
+
+
+
+##############################################################
+# Old Tests
+#
 # # Para pruebas de clase Alergia 
 # # Crear una instancia de Alergia
 # alergia1 = Alergia("agua", 2048)
@@ -186,3 +220,4 @@ Interfaz_Usuario.iniciar_interfaz()
 # # # # Usando algunas alergias al tipo_alergias
 # # # evaluacion_general = Evaluacion_General(tipo_alergias)
 # # # evaluacion_general.mostrar_evaluacion_general()
+##############################################################
