@@ -1,6 +1,8 @@
 
 class Alergia:
-    """ Clase Alergia
+    """ 
+    @class Alergia
+    Clase para crear los datos de las distintas alergias
     """
     # Atributos
     # Lista de alergias predefinidas
@@ -58,15 +60,3 @@ class Alergia:
             
         print(f"Alergia: {nombre_alergia} no encontrada.") 
                 
-
-# Probando la clase
-
-# # Crear una instancia de Alergia
-# alergia1 = Alergia("agua", 2048)
-
-# # Mostrar todas las alergias predefinidas
-# alergia1.mostrar_todas_alergias()
-
-# # Mostrar info de una alergia especifica
-# alergia1.mostrar_alergia_especifica("gatos")
-# alergia1.mostrar_alergia_especifica("birra")

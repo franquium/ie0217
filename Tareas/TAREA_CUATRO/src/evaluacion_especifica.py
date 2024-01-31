@@ -3,6 +3,9 @@ from alergia import Alergia
 
 class Evaluacion_Especifica:
     """
+    @class Evaluacion_Especifica
+    Clase para evaluar las  puntuaciones especificas de alergias de un
+    usuario basado en su puntuacion general.
     """
 
     def __init__(self, puntuacion_general):
@@ -31,7 +34,7 @@ class Evaluacion_Especifica:
 
     def mostrar_puntuacion(self):
         """
-        Imprime la puntuacion general y el desglose.
+        Imprime la puntuacion general y el desglose de las alergias detectadas.
         """
         print(f"Puntuacion General de Alergias: {self.puntuacion_general}")
         print("Alergias Detectadas:")
