@@ -73,7 +73,7 @@ class Tipos_de_Alergias:
         incluyendo tanto el nombre como el valor numerico.
         """
 
-        print("Alergias ingresadas por el Usuario:")
+        print("\nAlergias ingresadas por el Usuario:")
         for nombre, valor in self.alergias_usuario:
             print(f"{nombre} (Valor: {valor})")
         
