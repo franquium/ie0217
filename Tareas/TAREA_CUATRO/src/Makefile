@@ -6,18 +6,18 @@ SOURCE_FILES := main.py
 .PHONY: all 
 
 # Regla principal
-all: build 
+all: run 
 
 # Regla para construir y correr el programa en linux
 ifeq ($(OS),Linux)
-build:
+run:
 	python3 $(SOURCE_FILES)
 		
 endif
 
 # Regla para construir y correr el programa en linux
 ifeq ($(OS),Windows_NT)
-build:
+run:
 	python $(SOURCE_FILES)
 		
 endif
