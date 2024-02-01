@@ -113,13 +113,12 @@ def main():
     # 8 Manejo de Excepciones: ValueError y generico
     except ValueError:
         print("Error en el valor: El valor no puede ser negativo.")
-<<<<<<< HEAD
+
     except Exception as e:
         print(f"Ocurrio un error: {e}")
-=======
-    # except Exception as e:
-       # print(f"Ocurrio un error: {e}")
->>>>>>> e531dbacb7f0ba85ecd550c98ee6bed9b2a49bfd
+
+    except Exception as e:
+        print(f"Ocurrio un error: {e}")
 
 
 if __name__ == "__main__":
