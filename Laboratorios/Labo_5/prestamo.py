@@ -117,8 +117,6 @@ def main():
     except Exception as e:
         print(f"Ocurrio un error: {e}")
 
-    except Exception as e:
-        print(f"Ocurrio un error: {e}")
 
 
 if __name__ == "__main__":
