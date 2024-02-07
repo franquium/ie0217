@@ -17,8 +17,8 @@ import pandas as pd
 import numpy as np 
 import matplotlib.pyplot as plt
 import seaborn as sns
-# from scipy.stats import grubbs
-# from outliers import detect_outliers
+from scipy import stats
+
 
 """
 Requisitos del Programa
@@ -112,7 +112,7 @@ class Obtener_Datos:
 ### --- # Fin de la clase --- ###################
 
 
-# 4. Analisis de Datos
+# 4. Analisis de Datos & 5. Visualizacion de Datos
 
 class Analisis_Datos(Obtener_Datos):
     """
@@ -152,7 +152,7 @@ class Analisis_Datos(Obtener_Datos):
         
         for aerolinea, cantidad_vuelos in conteo.items():
             yield aerolinea, cantidad_vuelos
-        
+
 
     def contar_pasajeros_por_aerolinea(self, data):
         """
@@ -166,49 +166,110 @@ class Analisis_Datos(Obtener_Datos):
         suma_pasajeros = data.groupby('UNIQUE_CARRIER_NAME')['PASSENGERS'].sum()
         
         for aerolinea, total_pasajeros in suma_pasajeros.items():
-            yield aerolinea, total_pasajeros
+            yield aerolinea, total_pasajeros 
 
-            
-
-
-    def identificar_tendencias_mensuales(self, data):
-        """
-        Identifica y muestra las tendencias mensuales de pasajeros.
-        
-        @param data: DataFrame de Pandas con los datos cargados.
-        """
-        tendencias_mensuales = data.groupby('MONTH')['PASSENGERS'].sum()
-        print("Tendencias mensuales de pasajeros:")
-        print(tendencias_mensuales)
-        tendencias_mensuales.plot(kind='bar')
-        plt.title('Tendencias Mensuales de Pasajeros')
-        plt.xlabel('Mes')
-        plt.ylabel('Total de Pasajeros')
-        plt.show()
 
     def encontrar_patrones(self, data):
         """
-        Encuentra y muestra patrones en la relación entre la distancia y el numero de pasajeros.
+        Encuentra y muestra patrones usando la correlacion entre variables
+        en la relacion entre la distancia y el numero de pasajeros, y
+        la relacion entre la distancia y carga,
         
         @param data: DataFrame de Pandas con los datos cargados.
         """
-        print("Correlación entre distancia y pasajeros:")
+        print("\nCorrelacion entre distancia y pasajeros:")
         print(data[['DISTANCE', 'PASSENGERS']].corr())
 
+        print("\nCorrelacion entre distancia y carga:")
+        print(data[['DISTANCE', 'FREIGHT']].corr())
 
-    def buscar_valores_atipicos(self, data):
-        """
-        Busca y muestra valores atipicos en la cantidad de pasajeros.
+
+    # def identificar_tendencias_mensuales(self, data):
+    #     """
+    #     Identifica y muestra las tendencias mensuales de pasajeros.
         
+    #     @param data: DataFrame de Pandas con los datos cargados.
+    #     """
+    #     tendencias_mensuales = data.groupby('MONTH')['PASSENGERS'].sum()
+    #     print("\nTendencias mensuales de pasajeros:")
+    #     print(tendencias_mensuales)
+    #     tendencias_mensuales.plot(kind='bar')
+    #     plt.title('Tendencias Mensuales de Pasajeros')
+    #     plt.xlabel('Mes')
+    #     plt.ylabel('Total de Pasajeros')
+    #     plt.show()
+
+    def identificar_tendencias_mensuales(self, datos):
+        """
+        Identifica y muestra las tendencias mensuales de pasajeros, ajusta una linea
+        utilizando la funcion polyfit de NumPy y calcula el Error Cuadratico Medio Normalizado (NRMSE).
+        Inspirado en la sig referencia.
+        @ref: https://www.emilkhatib.com/analyzing-trends-in-data-with-pandas/
+
         @param data: DataFrame de Pandas con los datos cargados.
         """
+        # Agrupando datos por mes y sumando pasajeros y carga
+        tendencias = datos.groupby('MONTH')[['PASSENGERS', 'FREIGHT']].sum().reset_index()
+
+        # Crear subtramas
+        fig, axs = plt.subplots(1, 2, figsize=(15, 5))  # 1 fila, 2 columnas
+
+        # Subtrama para Pasajeros
+        axs[0].plot(tendencias['MONTH'], tendencias['PASSENGERS'], marker='o', label='Pasajeros')
+        # Linea de tendencia para Pasajeros
+        z_pasajeros = np.polyfit(tendencias['MONTH'], tendencias['PASSENGERS'], 1)
+        p_pasajeros = np.poly1d(z_pasajeros)
+        axs[0].plot(tendencias['MONTH'], p_pasajeros(tendencias['MONTH']), "r--", label='Linea de Tendencia')
+        axs[0].set_title('Tendencias Mensuales en el Trafico de Pasajeros')
+        axs[0].set_xlabel('Mes')
+        axs[0].set_ylabel('Total de Pasajeros')
+        axs[0].legend()
+        #plt.show()
+
+        # Subtrama para Carga
+        axs[1].plot(tendencias['MONTH'], tendencias['FREIGHT'], marker='o', label='Carga', color='green')
+        # Linea de tendencia para Carga
+        z_carga = np.polyfit(tendencias['MONTH'], tendencias['FREIGHT'], 1)
+        p_carga = np.poly1d(z_carga)
+        axs[1].plot(tendencias['MONTH'], p_carga(tendencias['MONTH']), "r--", label='Linea de Tendencia')
+        axs[1].set_title('Tendencias Mensuales en el Trafico de Carga')
+        axs[1].set_xlabel('Mes')
+        axs[1].set_ylabel('Total de Carga')
+        axs[1].legend()
+
+        # Ajustar la disposicion
+        plt.tight_layout()
+        # Mostrar la fig con las subtramas
+        plt.show()
+
+
+
+    def buscar_valores_atipicos(self, data, columna='PASSENGERS'):
+        """
+        Busca y muestra valores atipicos en la cantidad de pasajeros usando un metodo de grafico 
+        de caja usando Boxplot asi como usando el metodo estadistico de los Cuartiles
+        Realizado con inspiracion en la informacion obtenida en la referencia
+        
+        @ref: https://careerfoundry.com/en/blog/data-analytics/how-to-find-outliers/
+
+        @param data: DataFrame de Pandas con los datos cargados.
+        @param columna: Nombre de la columna para buscar valores atipicos.
+        """
+        # Metodo grafico usando boxplot
         print("Boxplot para identificar valores atipicos en pasajeros:")
         data.boxplot(column=['PASSENGERS'])
         plt.title('Valores Atipicos en Pasajeros')
         plt.ylabel('Pasajeros')
         plt.show()
 
-
+        # Metodo estadistico de los Cuartiles
+        Q1 = data[columna].quantile(0.25)
+        Q3 = data[columna].quantile(0.75)
+        IQR = Q3 - Q1       # Rango intercuartilico
+        filtro = (data[columna] < (Q1 - 1.5 * IQR)) | (data[columna] > (Q3 + 1.5 * IQR))
+        valores_atipicos = data[filtro]
+        print(f"Valores Atipicos en columna {columna} :")
+        print(valores_atipicos)
 
 ### --- # Fin de la clase --- ###################
 
@@ -262,14 +323,14 @@ class Filtrar_Por_Aerolinea:
 ### --- # Fin de la clase --- ###################
 
 
-# 6. Interpretacion de Resultados
 
-class Visualizacion_Datos:
-    """
-    @class Visualizacion_Datos
-    Clase para 
-    """
-    pass
+
+# class Visualizacion_Datos:
+#     """
+#     @class Visualizacion_Datos
+#     Clase para 
+#     """
+#     pass
 
 
 ### --- # Fin de la clase --- ###################
@@ -335,36 +396,42 @@ def main():
             analizador = Analisis_Datos(filepath, datos)
             
             # Metodos para analizar datos
-            # Metodo calcular valores descriptivos
+            # Instanciando Metodo calcular valores descriptivos
             valores_descrip = analizador.calcular_valores_descriptivos(datos)
 
 
-            # Metodo para calcular la cantidad de vuelos por aerolinea
+            # Instanciando Metodo para calcular la cantidad de vuelos por aerolinea
             cantidad_vuelos_por_aerolinea = analizador.contar_vuelos_por_aerolinea(datos)
             # Usando un ciclo para imprimir los resultados
             for aerolinea, cantidad_vuelos in analizador.contar_vuelos_por_aerolinea(datos):
                 print(f'\nPara la aerolinea: {aerolinea} \nLa cantidad de vuelos es: {cantidad_vuelos}')
 
-            # Metodo para calcular la cantidad de pasajeros por aerolinea
+            # Instanciando Metodo para calcular la cantidad de pasajeros por aerolinea
             pasajeros_aerolinea = analizador.contar_pasajeros_por_aerolinea(datos)
             # Usando un ciclo para imprimir los resultados
             for aerolinea, total_pasajeros in analizador.contar_pasajeros_por_aerolinea(datos):
                 print(f'\nPara la aerolinea: {aerolinea} \nEl numero total de pasajeros es: {total_pasajeros}')
             
+            # Instanciando Metodo encontrar patrones mediante la correlacion entre variables
+            analizador.encontrar_patrones(datos)
+
+            analizador.identificar_tendencias_mensuales(datos)
+            analizador.buscar_valores_atipicos(datos)
+
             # Para filtrar por una aerolinea en particular
             # Instanciando la clase Filtrar_Por_Aerolinea
             filtro = Filtrar_Por_Aerolinea(datos, 'American Airlines Inc.')
             max_filas = 3       # Numero para indicar el numero maximo de filas a imprimir (para no imprimir todo)
             contador_filas = 0  # Inicializando un contador para las filas
 
-            print(f'\nImprimiendo solamente: {max_filas} filas (para evitar imprimir todo) de datos completas del filtrado: \n')
-            for i in filtro:
+            # print(f'\nImprimiendo solamente: {max_filas} filas (para evitar imprimir todo) de datos completas del filtrado: \n')
+            # for i in filtro:
                 
-                if (contador_filas < max_filas):
-                    print(i)
-                    contador_filas += 1
-                else:
-                    break
+            #     if (contador_filas < max_filas):
+            #         print(i)
+            #         contador_filas += 1
+            #     else:
+            #         break
         
 
         # En caso de que no se carguen los datos del CSV        
@@ -379,8 +446,8 @@ def main():
             print(f"Error: El archivo {filepath} no fue encontrado.\n")
     except ValueError:
             print(f"Error de carga: Los datos no se han cargado correctamente.")
-    # except Exception as e:
-    #         print(f"Error desconocido: {e}\n")
+    except Exception as e:         
+            print(f"Error desconocido: {e}\n")
 
 
 
