@@ -1,7 +1,24 @@
+""" 
+###############################################################################
+@file 
+@brief Programa para el Analizar y Manipular datos a partir de un archivo CSV
+@autor J. Antonio Franchi
+
+###################################################################################
+""" 
+
+#################################################################
+# Para revisar los problemas de importacion de modulos de Python
+# al correr: python <nombre_archivo.py>
+import sys
+print("Python interprete actual:", sys.executable)
+
 import pandas as pd 
 import numpy as np 
 import matplotlib.pyplot as plt
 import seaborn as sns
+# from scipy.stats import grubbs
+# from outliers import detect_outliers
 
 """
 Requisitos del Programa
@@ -12,6 +29,11 @@ Requisitos del Programa
 5. Visualizacion de Datos
 6. Interpretacion de Resultados
 7. Documentacion y Presentacion
+
+Ref sobre valores atipicos:
+
+https://careerfoundry.com/en/blog/data-analytics/how-to-find-outliers/
+
 """
 
 # 2. Obtencion de Datos & 3. Limpieza y Preparacion de Datos
@@ -27,7 +49,7 @@ class Obtener_Datos:
     def __init__(self, filepath):
         """
         Constructor de la clase con la ruta al archivo CSV.
-        
+        #
         @param filepath: Ruta al archivo CSV.
         """
         self.filepath = filepath
@@ -100,7 +122,97 @@ class Analisis_Datos(Obtener_Datos):
     @class Analisis_Datos
     Clase para el analisis de Datos que hereda de la clase Obtener_Datos
     """
-    pass
+    def __init__(self, filepath, datos):
+        """
+        Constructor de la clase Analisis_Datos
+
+        @param filepath: Ruta al archivo CSV.
+        @param datos: DataFrame de Pandas que contiene los datos de vuelos.
+        """
+        super().__init__(filepath)
+        self.datos = datos
+
+
+    def calcular_valores_descriptivos(self, data):
+        """
+        Calcula y muestra valores descriptivos estadisticas 
+        descriptivas del DataFrame.
+        
+        @param data: DataFrame de Pandas con los datos.
+        """
+        print(data.describe())
+
+    def contar_vuelos_por_aerolinea(self, data):
+        """
+        Generador que cuenta la cantidad de vuelos por aerolinea.
+        
+        @param data: DataFrame de Pandas con los datos.
+        
+        @yield: Tupla con el nombre de la aerolinea y la cantidad de vuelos.
+        """
+        # Usando el metodo value_counts() de Pandas
+        conteo = data['UNIQUE_CARRIER_NAME'].value_counts()
+        
+        for aerolinea, cantidad_vuelos in conteo.items():
+            yield aerolinea, cantidad_vuelos
+
+        print(f'Para la aerolinea: {aerolinea} \nLa cantindad de vuelos es: {cantidad_vuelos}\n')
+
+    def detalles_pasajeros_por_aerolinea(self, data):
+        """
+        Generador que da la suma total de pasajeros por aerolinea.
+        
+        @param data: DataFrame de Pandas con los datos.
+        
+        @yield: Tupla con el nombre de la aerolinea y el total de pasajeros.
+        """
+        # Usando los metodos de Pandas groupby() y sum()
+        suma_pasajeros = data.groupby('UNIQUE_CARRIER_NAME')['PASSENGERS'].sum()
+        
+        for aerolinea, total_pasajeros in suma_pasajeros.items():
+            yield aerolinea, total_pasajeros
+
+        print(f'Para la aerolinea: {aerolinea} \nEl numero total de pasajeros es: {total_pasajeros}\n')
+
+
+    def identificar_tendencias_mensuales(self, data):
+        """
+        Identifica y muestra las tendencias mensuales de pasajeros.
+        
+        @param data: DataFrame de Pandas con los datos cargados.
+        """
+        tendencias_mensuales = data.groupby('MONTH')['PASSENGERS'].sum()
+        print("Tendencias mensuales de pasajeros:")
+        print(tendencias_mensuales)
+        tendencias_mensuales.plot(kind='bar')
+        plt.title('Tendencias Mensuales de Pasajeros')
+        plt.xlabel('Mes')
+        plt.ylabel('Total de Pasajeros')
+        plt.show()
+
+    def encontrar_patrones(self, data):
+        """
+        Encuentra y muestra patrones en la relación entre la distancia y el número de pasajeros.
+        
+        @param data: DataFrame de Pandas con los datos cargados.
+        """
+        print("Correlación entre distancia y pasajeros:")
+        print(data[['DISTANCE', 'PASSENGERS']].corr())
+
+
+    def buscar_valores_atipicos(self, data):
+        """
+        Busca y muestra valores atipicos en la cantidad de pasajeros.
+        
+        @param data: DataFrame de Pandas con los datos cargados.
+        """
+        print("Boxplot para identificar valores atipicos en pasajeros:")
+        data.boxplot(column=['PASSENGERS'])
+        plt.title('Valores Atipicos en Pasajeros')
+        plt.ylabel('Pasajeros')
+        plt.show()
+
+
 
 ### --- # Fin de la clase --- ###################
 
@@ -110,7 +222,7 @@ class Filtrar_Por_Aerolinea:
     """
     @class Filtrar_Por_Aerolinea
     Clase para implementar un interador personalizados para filtrar
-    los datos de alguna aerolinea en especifico
+    los datos de alguna aerolinea en especifico.
 
     @param datos: DataFrame de Pandas que contiene los datos de vuelos.
     @param aerolinea: String con el nombre de la aerolinea que se va a  filtrar.
@@ -217,6 +329,13 @@ def main():
 
 
     # Implementacion de 4. Analisis de Datos
+
+    # Para analizar datos
+    # Instanciando la clase Analizar_Datos
+    analizador = Analisis_Datos(filepath, datos)
+    
+    analizador.calcular_valores_descriptivos(datos)
+    analizador.contar_vuelos_por_aerolinea(datos)
 
     # Para filtrar por una aerolinea en particular
     # Instanciando la clase Filtrar_Por_Aerolinea
