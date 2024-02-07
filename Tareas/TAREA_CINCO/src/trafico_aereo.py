@@ -19,7 +19,10 @@ Requisitos del Programa
 class Obtener_Datos:
     """
     @class Obtener_Datos
-    Clase para obtener y cargar los datos a partir del archivo CSV en un DataFrame de Pandas
+    Clase para obtener y cargar los datos a partir del archivo CSV en 
+    un DataFrame de Pandas
+
+    @param filepath: Ruta al archivo CSV.
     """
     def __init__(self, filepath):
         """
@@ -86,19 +89,72 @@ class Obtener_Datos:
         
 
         return datos_filtrado
-##################
-# Fin de la clase        
-###################
     
+### --- # Fin de la clase --- ###################
 
 
-class Analisis_Datos:
+# 4. Analisis de Datos
+
+class Analisis_Datos(Obtener_Datos):
     """
     @class Analisis_Datos
-    Clase para 
+    Clase para el analisis de Datos que hereda de la clase Obtener_Datos
     """
     pass
 
+### --- # Fin de la clase --- ###################
+
+
+
+class Filtrar_Por_Aerolinea:
+    """
+    @class Filtrar_Por_Aerolinea
+    Clase para implementar un interador personalizados para filtrar
+    los datos de alguna aerolinea en especifico
+
+    @param datos: DataFrame de Pandas que contiene los datos de vuelos.
+    @param aerolinea: String con el nombre de la aerolinea que se va a  filtrar.
+    """
+
+    def __init__(self, datos, aerolinea):
+        """
+        Constructor de la clase Filtrar_Por_Aerolinea.
+
+        @param datos: DataFrame de Pandas que contiene los datos de vuelos.
+        @param aerolinea: String con el nombre de la aerolinea especifica.
+        """
+        self.datos = datos
+        self.aerolinea = aerolinea
+        self.index = -1     # Para llevar registro de la posicion actual dentro del DataFrame
+
+    def __iter__(self):
+        """
+        Metodo iterador que devuelve el propio objeto iterador.
+
+        @return: Devuelve la instancia actual del iterador.
+        """
+        return self
+
+    def __next__(self):
+        """
+       Metodo iterador que devuelve el siguiente elemento del iterador.
+
+        @return: La siguiente fila del DataFrame que coincide con la aerolinea especificada.
+        @raise StopIteration: Se lanza cuando no hay mas filas que coincidan o se llega al final del DataFrame.
+        """
+        self.index += 1
+        while self.index < len(self.datos):
+            if self.datos.iloc[self.index]['UNIQUE_CARRIER_NAME'] == self.aerolinea:
+                return self.datos.iloc[self.index]
+            self.index += 1
+        raise StopIteration
+
+
+
+### --- # Fin de la clase --- ###################
+
+
+# 6. Interpretacion de Resultados
 
 class Visualizacion_Datos:
     """
@@ -108,12 +164,18 @@ class Visualizacion_Datos:
     pass
 
 
+### --- # Fin de la clase --- ###################
 
 
 
-# Main
-if __name__ == "__main__":
 
+# Funcion principal o Main del programa
+def main():
+
+    # Implementacion de 2. Obtencion de Datos & 3. Limpieza y Preparacion de Datos
+    # Datos tomados de:
+    # https://www.transtats.bts.gov/DL_SelectFields.aspx?gnoyr_VQ=GDL&QO_fu146_anzr=Nv4%20Pn44vr45
+    # Para el anno 2023
     filepath = "T_T100_MARKET_US_CARRIER_ONLY.csv"  # Nombre del archivo CSV
     data = Obtener_Datos(filepath)
     datos = data.cargas_datos()
@@ -146,13 +208,33 @@ if __name__ == "__main__":
 
     # Eliminando filas con ceros en todas las variables numericas de interes
     datos = data.eliminar_filas_con_ceros(datos)
-    
-    # print(datos.head(5))
-    # print(datos.shape)
-
 
     # Codigo para verificar que funka 
     # print(datos.head(5))    # imprime los primeros 5 datos
     # print(datos.sample(3))  # imprime una muestra de 3 datos aleatorios 
     # print(datos.describe()) # imprime una descripcion general rapida de los datos numeros del DataFrame
     # print(datos.shape)      # imprime el tamanno del DataFrame
+
+
+    # Implementacion de 4. Analisis de Datos
+
+    # Para filtrar por una aerolinea en particular
+    # Instanciando la clase Filtrar_Por_Aerolinea
+    filtro = Filtrar_Por_Aerolinea(datos, 'American Airlines Inc.')
+    max_filas = 3       # Numero para indicar el numero maximo de filas a imprimir (para no imprimir todo)
+    contador_filas = 0  # Inicializando un contador para las filas
+
+    print(f'Imprimiendo solamente: {max_filas} filas (para evitar imprimir todo) de datos completas del filtrado: \n')
+    for i in filtro:
+        
+        if (contador_filas < max_filas):
+            print(i)
+            contador_filas += 1
+        else:
+            break
+
+
+
+# Llamado de la funcion main
+if __name__ == "__main__":
+    main()

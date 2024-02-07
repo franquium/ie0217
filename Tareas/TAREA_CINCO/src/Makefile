@@ -1,5 +1,5 @@
 # Nombres de archivos
-SOURCE_FILES := main.py 
+SOURCE_FILES := trafico_aereo.py
 
 
 # Reglas
