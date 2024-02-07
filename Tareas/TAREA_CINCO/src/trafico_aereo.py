@@ -447,7 +447,11 @@ def main():
     except ValueError:
             print(f"Error de carga: Los datos no se han cargado correctamente.")
     except Exception as e:         
+<<<<<<< HEAD
         print(f"Error desconocido: {e}\n")
+=======
+            print(f"Error desconocido: {e}\n")
+>>>>>>> 9f1ac0e62614417688651a371f5a581017c902d4
 
 
 
