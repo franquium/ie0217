@@ -57,21 +57,18 @@ class Obtener_Datos:
     def cargas_datos(self):
         """
         Carga los datos desde el archivo CSV a un DataFrame de Pandas.
-        Se implementa el manejo de excepciones para asegurar un buen comportamiento
         
         @return: DataFrame de Pandas con los datos cargados.
         """
-        try:
-            # Importando los datos con DataFrame de Pandas
-            # Instanciando el dataframe con los datos del archivo csv
-            data = pd.read_csv(self.filepath)
-            print("Datos cargados exitosamente.\n")
-            return data
         
-        except FileNotFoundError:
-            print(f"Error: El archivo {self.filepath} no fue encontrado.\n")
-        except Exception as e:
-            print(f"Error desconocido: {e}\n")
+        # Importando los datos con DataFrame de Pandas
+        # Instanciando el dataframe con los datos del archivo csv
+        data = pd.read_csv(self.filepath)
+        print("Datos cargados exitosamente.\n")
+
+        return data
+        
+  
 
     # Metodos para la Limpieza y Preparacion de Datos
     def eliminar_columnas(self, datos, columnas):
@@ -155,10 +152,9 @@ class Analisis_Datos(Obtener_Datos):
         
         for aerolinea, cantidad_vuelos in conteo.items():
             yield aerolinea, cantidad_vuelos
+        
 
-        print(f'Para la aerolinea: {aerolinea} \nLa cantindad de vuelos es: {cantidad_vuelos}\n')
-
-    def detalles_pasajeros_por_aerolinea(self, data):
+    def contar_pasajeros_por_aerolinea(self, data):
         """
         Generador que da la suma total de pasajeros por aerolinea.
         
@@ -172,7 +168,7 @@ class Analisis_Datos(Obtener_Datos):
         for aerolinea, total_pasajeros in suma_pasajeros.items():
             yield aerolinea, total_pasajeros
 
-        print(f'Para la aerolinea: {aerolinea} \nEl numero total de pasajeros es: {total_pasajeros}\n')
+            
 
 
     def identificar_tendencias_mensuales(self, data):
@@ -192,7 +188,7 @@ class Analisis_Datos(Obtener_Datos):
 
     def encontrar_patrones(self, data):
         """
-        Encuentra y muestra patrones en la relación entre la distancia y el número de pasajeros.
+        Encuentra y muestra patrones en la relación entre la distancia y el numero de pasajeros.
         
         @param data: DataFrame de Pandas con los datos cargados.
         """
@@ -284,73 +280,107 @@ class Visualizacion_Datos:
 # Funcion principal o Main del programa
 def main():
 
-    # Implementacion de 2. Obtencion de Datos & 3. Limpieza y Preparacion de Datos
-    # Datos tomados de:
-    # https://www.transtats.bts.gov/DL_SelectFields.aspx?gnoyr_VQ=GDL&QO_fu146_anzr=Nv4%20Pn44vr45
-    # Para el anno 2023
-    filepath = "T_T100_MARKET_US_CARRIER_ONLY.csv"  # Nombre del archivo CSV
-    data = Obtener_Datos(filepath)
-    datos = data.cargas_datos()
+    # Se implementa el manejo de excepciones para asegurar un buen comportamiento
+    try:
+        # Implementacion de 2. Obtencion de Datos & 3. Limpieza y Preparacion de Datos
+        # Datos tomados de:
+        # https://www.transtats.bts.gov/DL_SelectFields.aspx?gnoyr_VQ=GDL&QO_fu146_anzr=Nv4%20Pn44vr45
+        # Para el anno 2023
+        filepath = "T_T100_MARKET_US_CARRIER_ONLY.csv"  # Nombre del archivo CSV
+        data = Obtener_Datos(filepath)
+        datos = data.cargas_datos()
 
-    # print(datos.head(5))
-    
-    """ 
-    # Lista de tipos de datos y descripcion en el archivo CSV:
-    PASSENGERS: Pasajeros embarcados
-    FREIGHT: Carga embarcada (libras)
-    MAIL: Correo embarcado (libras)
-    DISTANCE: Distancia entre aeropuertos (millas)
-    UNIQUE_CARRIER: Codigo de operador único.
-    AIRLINE_ID: Numero de identificacion unico para identificar una aerolínea.
-    UNIQUE_CARRIER_NAME:  Nombre exclusivo del operador.
-    ORIGIN_AIRPORT_ID: ID del aeropuerto de origen.
-    ORIGIN: Codigo de aeropuerto de origen
-    ORIGIN_CITY_NAME: Nombre de la ciudad de origen.
-    DEST_AIRPORT_ID: 
-    DEST: Codigo de aeropuerto de destino
-    DEST_CITY_NAME: ID del aeropuerto de destino.
-    MONTH: mes del vuelo
-    CLASS: Clase de servicio
-    DATA_SOURCE: Fuente de Datos, para estos datos todos son DU: Vuelos Domesticos de Operadores de EEUU
-    """
-    # Lista de columnas a eliminar con datos redundantes o innecesarios
-    columnas_a_eliminar = ['UNIQUE_CARRIER', 'DATA_SOURCE', 'DEST_AIRPORT_ID', 'ORIGIN_AIRPORT_ID']
-    # Eliminando columnas
-    datos = data.eliminar_columnas(datos, columnas_a_eliminar)
+        # Condicion verificar que los datos se hayan cargado correctamente
+        if datos is  not None:
+            
+            
+            """ 
+            # Lista de tipos de datos y descripcion en el archivo CSV:
+            PASSENGERS: Pasajeros embarcados
+            FREIGHT: Carga embarcada (libras)
+            MAIL: Correo embarcado (libras)
+            DISTANCE: Distancia entre aeropuertos (millas)
+            UNIQUE_CARRIER: Codigo de operador único.
+            AIRLINE_ID: Numero de identificacion unico para identificar una aerolínea.
+            UNIQUE_CARRIER_NAME:  Nombre exclusivo del operador.
+            ORIGIN_AIRPORT_ID: ID del aeropuerto de origen.
+            ORIGIN: Codigo de aeropuerto de origen
+            ORIGIN_CITY_NAME: Nombre de la ciudad de origen.
+            DEST_AIRPORT_ID: 
+            DEST: Codigo de aeropuerto de destino
+            DEST_CITY_NAME: ID del aeropuerto de destino.
+            MONTH: mes del vuelo
+            CLASS: Clase de servicio
+            DATA_SOURCE: Fuente de Datos, para estos datos todos son DU: Vuelos Domesticos de Operadores de EEUU
+            """
+            # Lista de columnas a eliminar con datos redundantes o innecesarios
+            columnas_a_eliminar = ['UNIQUE_CARRIER', 'DATA_SOURCE', 'DEST_AIRPORT_ID', 'ORIGIN_AIRPORT_ID']
+            # Eliminando columnas
+            datos = data.eliminar_columnas(datos, columnas_a_eliminar)
 
-    # Eliminando filas con ceros en todas las variables numericas de interes
-    datos = data.eliminar_filas_con_ceros(datos)
+            # Eliminando filas con ceros en todas las variables numericas de interes
+            datos = data.eliminar_filas_con_ceros(datos)
 
-    # Codigo para verificar que funka 
-    # print(datos.head(5))    # imprime los primeros 5 datos
-    # print(datos.sample(3))  # imprime una muestra de 3 datos aleatorios 
-    # print(datos.describe()) # imprime una descripcion general rapida de los datos numeros del DataFrame
-    # print(datos.shape)      # imprime el tamanno del DataFrame
+            # Codigo para verificar que funka 
+            # print(datos.head(5))    # imprime los primeros 5 datos
+            # print(datos.sample(3))  # imprime una muestra de 3 datos aleatorios 
+            # print(datos.describe()) # imprime una descripcion general rapida de los datos numeros del DataFrame
+            # print(datos.shape)      # imprime el tamanno del DataFrame
 
 
-    # Implementacion de 4. Analisis de Datos
+            # Implementacion de 4. Analisis de Datos
 
-    # Para analizar datos
-    # Instanciando la clase Analizar_Datos
-    analizador = Analisis_Datos(filepath, datos)
-    
-    analizador.calcular_valores_descriptivos(datos)
-    analizador.contar_vuelos_por_aerolinea(datos)
+            # Para analizar datos
+            # Instanciando la clase Analizar_Datos
+            analizador = Analisis_Datos(filepath, datos)
+            
+            # Metodos para analizar datos
+            # Metodo calcular valores descriptivos
+            valores_descrip = analizador.calcular_valores_descriptivos(datos)
 
-    # Para filtrar por una aerolinea en particular
-    # Instanciando la clase Filtrar_Por_Aerolinea
-    filtro = Filtrar_Por_Aerolinea(datos, 'American Airlines Inc.')
-    max_filas = 3       # Numero para indicar el numero maximo de filas a imprimir (para no imprimir todo)
-    contador_filas = 0  # Inicializando un contador para las filas
 
-    print(f'Imprimiendo solamente: {max_filas} filas (para evitar imprimir todo) de datos completas del filtrado: \n')
-    for i in filtro:
+            # Metodo para calcular la cantidad de vuelos por aerolinea
+            cantidad_vuelos_por_aerolinea = analizador.contar_vuelos_por_aerolinea(datos)
+            # Usando un ciclo para imprimir los resultados
+            for aerolinea, cantidad_vuelos in analizador.contar_vuelos_por_aerolinea(datos):
+                print(f'\nPara la aerolinea: {aerolinea} \nLa cantidad de vuelos es: {cantidad_vuelos}')
+
+            # Metodo para calcular la cantidad de pasajeros por aerolinea
+            pasajeros_aerolinea = analizador.contar_pasajeros_por_aerolinea(datos)
+            # Usando un ciclo para imprimir los resultados
+            for aerolinea, total_pasajeros in analizador.contar_pasajeros_por_aerolinea(datos):
+                print(f'\nPara la aerolinea: {aerolinea} \nEl numero total de pasajeros es: {total_pasajeros}')
+            
+            # Para filtrar por una aerolinea en particular
+            # Instanciando la clase Filtrar_Por_Aerolinea
+            filtro = Filtrar_Por_Aerolinea(datos, 'American Airlines Inc.')
+            max_filas = 3       # Numero para indicar el numero maximo de filas a imprimir (para no imprimir todo)
+            contador_filas = 0  # Inicializando un contador para las filas
+
+            print(f'\nImprimiendo solamente: {max_filas} filas (para evitar imprimir todo) de datos completas del filtrado: \n')
+            for i in filtro:
+                
+                if (contador_filas < max_filas):
+                    print(i)
+                    contador_filas += 1
+                else:
+                    break
         
-        if (contador_filas < max_filas):
-            print(i)
-            contador_filas += 1
+
+        # En caso de que no se carguen los datos del CSV        
         else:
-            break
+            raise ValueError
+    
+
+
+
+    # Excepciones
+    except FileNotFoundError:
+            print(f"Error: El archivo {filepath} no fue encontrado.\n")
+    except ValueError:
+            print(f"Error de carga: Los datos no se han cargado correctamente.")
+    # except Exception as e:
+    #         print(f"Error desconocido: {e}\n")
 
 
 
