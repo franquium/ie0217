@@ -97,10 +97,25 @@ Cuando un generador es llamado, retoma donde lo dejó (recuerda todos los datos 
 
 
 
-## Parte Practica 1: Interpretación de Resultados
+## Parte Practica 1:  Analisis de Datos & Interpretación de Resultados
 
 
-Para esta seccion debido a que quedaba a investigacion propia del estudiante la implementacion, aplicacion y analisis se procedio a hacer un analisis no tan complejo en el numero de combinaciones a analizar pero si significativo y ejemplificativo para la tarea.
+En esta seccion se hace una interpretacion de los resultados obtenidos al realizar el analisis de datos y la visualizacion de datos.
+
+1. Primero para el calculo de los valores descriptivos se utliza el metodo de Pandas `.describe()`, los resultados que se obtienen son los siguientes:
+
+```
+          PASSENGERS       FREIGHT          MAIL       DISTANCE     AIRLINE_ID          MONTH
+count  241955.000000  2.419550e+05  2.419550e+05  241955.000000  241955.000000  241955.000000
+mean     3257.298841  1.245503e+05  3.321432e+03     995.827708   20243.158290       5.523320
+std      6393.819478  7.733412e+05  3.718061e+04    1016.028333     670.211065       2.862242
+min         0.000000  0.000000e+00  0.000000e+00       0.000000   19393.000000       1.000000
+25%         6.000000  0.000000e+00  0.000000e+00     335.000000   19805.000000       3.000000
+50%       439.000000  0.000000e+00  0.000000e+00     742.000000   20272.000000       6.000000
+75%      3981.000000  2.193000e+03  0.000000e+00    1262.000000   20416.000000       8.000000
+max     95703.000000  9.589923e+07  2.570979e+06   10908.000000   22119.000000      10.000000
+
+```
 
 
 <!--- [KDnuggets](https://www.kdnuggets.com/profiling-python-code-using-timeit-and-cprofile)  -->
@@ -110,4 +125,7 @@ Para esta seccion debido a que quedaba a investigacion propia del estudiante la 
     * Se obtiene un tiempo de ejecuccion es de aprox: 0.000703 s
 * Puntaje ingresado: 1027 (desglosa en tres alergias de la lista)
     * Se obtiene un tiempo de ejecuccion es de aprox: 0.001517 s
+
+
+
 
