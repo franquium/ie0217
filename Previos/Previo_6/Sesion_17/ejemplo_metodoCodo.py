@@ -14,7 +14,7 @@ for k in range(1, 11):
     kmeans.fit(X)
     inercias.append(kmeans.inertia_)
 
-# Graficar el metodo del codo
+# Graficar el metodo del Codo
 plt.plot(range(1, 11), inercias, marker='o')
 plt.title('Metodo del Codo')
 plt.xlabel('Numero de Clusters (k)')

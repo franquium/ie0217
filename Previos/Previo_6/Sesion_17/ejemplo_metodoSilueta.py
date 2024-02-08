@@ -16,7 +16,7 @@ for k in range(2, 20):
     score = silhouette_score(X, kmeans.labels_)
     silhouette_scores.append(score)
 
-# Graficar el metodo de la silueta
+# Graficar el metodo de la Silueta
 plt.plot(range(2, 20), silhouette_scores, marker='o')
 plt.title('Metodo de la Silueta')
 plt.xlabel('Numero de Clusters (k)')
