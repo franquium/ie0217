@@ -12,6 +12,7 @@
 # al correr: python <nombre_archivo.py>
 # import sys
 # print("Python interprete actual:", sys.executable)
+#################################################################
 
 import pandas as pd 
 import numpy as np 
@@ -201,8 +202,8 @@ class Analisis_Datos(Obtener_Datos):
 
     def identificar_tendencias_mensuales(self, datos):
         """
-        Identifica y muestra las tendencias mensuales de pasajeros, ajusta una linea
-        utilizando la funcion polyfit de NumPy y calcula el Error Cuadratico Medio Normalizado (NRMSE).
+        Identifica y muestra las tendencias mensuales de pasajeros y de carga, ajusta una linea
+        utilizando la funcion polyfit de NumPy y se grafican las tendencias utilizando Matplotlib.
         Inspirado en la sig referencia.
         @ref: https://www.emilkhatib.com/analyzing-trends-in-data-with-pandas/
 
@@ -234,7 +235,7 @@ class Analisis_Datos(Obtener_Datos):
         axs[1].plot(tendencias['MONTH'], p_carga(tendencias['MONTH']), "r--", label='Linea de Tendencia')
         axs[1].set_title('Tendencias Mensuales en el Trafico de Carga')
         axs[1].set_xlabel('Mes')
-        axs[1].set_ylabel('Total de Carga')
+        axs[1].set_ylabel('Total de Carga (lb)')
         axs[1].legend()
 
         # Ajustar la disposicion
@@ -244,11 +245,11 @@ class Analisis_Datos(Obtener_Datos):
 
 
 
-    def buscar_valores_atipicos(self, data, columna='PASSENGERS'):
+    def buscar_valores_atipicos(self, data, columna):
         """
-        Busca y muestra valores atipicos en la cantidad de pasajeros usando un metodo de grafico 
-        de caja usando Boxplot asi como usando el metodo estadistico de los Cuartiles
-        Realizado con inspiracion en la informacion obtenida en la referencia
+        Busca y muestra valores atipicos en la cantidad deseada usando un metodo de grafico 
+        de caja usando Boxplot de Matplotlib asi como usando el metodo estadistico de los Cuartiles
+        Realizado con inspiracion en la informacion obtenida en la referencia.
         
         @ref: https://careerfoundry.com/en/blog/data-analytics/how-to-find-outliers/
 
@@ -256,10 +257,10 @@ class Analisis_Datos(Obtener_Datos):
         @param columna: Nombre de la columna para buscar valores atipicos.
         """
         # Metodo grafico usando boxplot
-        print("Boxplot para identificar valores atipicos en pasajeros:")
-        data.boxplot(column=['PASSENGERS'])
-        plt.title('Valores Atipicos en Pasajeros')
-        plt.ylabel('Pasajeros')
+        print(f"Boxplot para identificar valores atipicos en {columna}:")
+        data.boxplot(columna)
+        plt.title(f'Valores Atipicos en {columna}')
+        plt.ylabel(f'{columna}')
         plt.show()
 
         # Metodo estadistico de los Cuartiles
@@ -270,6 +271,38 @@ class Analisis_Datos(Obtener_Datos):
         valores_atipicos = data[filtro]
         print(f"Valores Atipicos en columna {columna} :")
         print(valores_atipicos)
+
+
+    def histograma_seaborn(self, datos, columna):
+        """
+        Crea un histograma de la distribucion de la columna escogida utilizando Seaborn
+        
+        @param datos: DataFrame de Pandas con los datos.
+        @param columna: Nombre de la columna
+        """
+        plt.figure(figsize=(10, 5))
+        sns.histplot(data=datos[columna], bins=30, kde=True, color='skyblue')
+        plt.title(f'Distribucion de {columna}')
+        plt.xlabel(f' Datos en {columna}')
+        plt.ylabel('Frecuencia')
+        plt.show()
+
+    def scatterplot_seaborn(self, datos, columna1, columna2):
+        """
+        Crea un grafico de dispersion para comparar los datos de una columna escogida contra los datos 
+        de otra columna escogida utilizando Seaborn.
+        
+        @param datos: DataFrame de Pandas con los datos.
+        @param columna1: Nombre de la columna 1 de datos.
+        @param columna2: Nombre de la columna 2 de datos.
+        """
+        sns.set(style='whitegrid')
+        sns.scatterplot(x=columna1, y=columna2, data=datos, color='red', edgecolor='black', alpha=0.25)
+        plt.title(f'{columna1} versus {columna2}')
+        plt.xlabel(f'Datos en {columna1}')
+        plt.ylabel(f'Datos en {columna2}')
+        
+        plt.show()
 
 ### --- # Fin de la clase --- ###################
 
@@ -415,8 +448,20 @@ def main():
             # Instanciando Metodo encontrar patrones mediante la correlacion entre variables
             analizador.encontrar_patrones(datos)
 
+            # Instanciando Metodo identificar tendencias mensuales entre Pasajeros y el Mes, y la Carga  y el Mes
             analizador.identificar_tendencias_mensuales(datos)
-            analizador.buscar_valores_atipicos(datos)
+
+            # Instanciando Metodo para buscar valores atipicos segun el dato escogido
+            # en este caso Pasajeros
+            analizador.buscar_valores_atipicos(datos, columna='PASSENGERS')
+
+            # Instanciando Metodo para hacer histogramas utilizando Seaborn 
+            # segun los datos escogidos, en este caso Distancias
+            analizador.histograma_seaborn(datos, columna='DISTANCE')    # columna='DISTANCE'
+
+            # Instanciando Metodo para hacer Distribuciones de Dispersion utilizando Seaborn 
+            # segun los datos escogidos, en este caso Distancias y Carga
+            analizador.scatterplot_seaborn(datos, columna1='DISTANCE', columna2='FREIGHT')      # columna1='DISTANCE', columna2='FREIGHT'
 
             # Para filtrar por una aerolinea en particular
             # Instanciando la clase Filtrar_Por_Aerolinea
@@ -424,14 +469,14 @@ def main():
             max_filas = 3       # Numero para indicar el numero maximo de filas a imprimir (para no imprimir todo)
             contador_filas = 0  # Inicializando un contador para las filas
 
-            # print(f'\nImprimiendo solamente: {max_filas} filas (para evitar imprimir todo) de datos completas del filtrado: \n')
-            # for i in filtro:
+            print(f'\nImprimiendo solamente: {max_filas} filas (para evitar imprimir todo) de datos completas del filtrado: \n')
+            for i in filtro:
                 
-            #     if (contador_filas < max_filas):
-            #         print(i)
-            #         contador_filas += 1
-            #     else:
-            #         break
+                if (contador_filas < max_filas):
+                    print(i)
+                    contador_filas += 1
+                else:
+                    break
         
 
         # En caso de que no se carguen los datos del CSV        
@@ -446,12 +491,9 @@ def main():
             print(f"Error: El archivo {filepath} no fue encontrado.\n")
     except ValueError:
             print(f"Error de carga: Los datos no se han cargado correctamente.")
-    except Exception as e:         
-<<<<<<< HEAD
+    except Exception as e:
         print(f"Error desconocido: {e}\n")
-=======
-            print(f"Error desconocido: {e}\n")
->>>>>>> 9f1ac0e62614417688651a371f5a581017c902d4
+
 
 
 
