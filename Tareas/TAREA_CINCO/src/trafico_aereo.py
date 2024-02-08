@@ -1,6 +1,6 @@
 """ 
 ###############################################################################
-@file 
+@file trafico_aereo.py
 @brief Programa para el Analizar y Manipular datos a partir de un archivo CSV
 @autor J. Antonio Franchi
 
@@ -185,21 +185,6 @@ class Analisis_Datos(Obtener_Datos):
         print(data[['DISTANCE', 'FREIGHT']].corr())
 
 
-    # def identificar_tendencias_mensuales(self, data):
-    #     """
-    #     Identifica y muestra las tendencias mensuales de pasajeros.
-        
-    #     @param data: DataFrame de Pandas con los datos cargados.
-    #     """
-    #     tendencias_mensuales = data.groupby('MONTH')['PASSENGERS'].sum()
-    #     print("\nTendencias mensuales de pasajeros:")
-    #     print(tendencias_mensuales)
-    #     tendencias_mensuales.plot(kind='bar')
-    #     plt.title('Tendencias Mensuales de Pasajeros')
-    #     plt.xlabel('Mes')
-    #     plt.ylabel('Total de Pasajeros')
-    #     plt.show()
-
     def identificar_tendencias_mensuales(self, datos):
         """
         Identifica y muestra las tendencias mensuales de pasajeros y de carga, ajusta una linea
@@ -352,23 +337,7 @@ class Filtrar_Por_Aerolinea:
         raise StopIteration
 
 
-
 ### --- # Fin de la clase --- ###################
-
-
-
-
-# class Visualizacion_Datos:
-#     """
-#     @class Visualizacion_Datos
-#     Clase para 
-#     """
-#     pass
-
-
-### --- # Fin de la clase --- ###################
-
-
 
 
 # Funcion principal o Main del programa
@@ -386,8 +355,6 @@ def main():
 
         # Condicion verificar que los datos se hayan cargado correctamente
         if datos is  not None:
-            
-            
             """ 
             # Lista de tipos de datos y descripcion en el archivo CSV:
             PASSENGERS: Pasajeros embarcados
@@ -415,14 +382,7 @@ def main():
             # Eliminando filas con ceros en todas las variables numericas de interes
             datos = data.eliminar_filas_con_ceros(datos)
 
-            # Codigo para verificar que funka 
-            # print(datos.head(5))    # imprime los primeros 5 datos
-            # print(datos.sample(3))  # imprime una muestra de 3 datos aleatorios 
-            # print(datos.describe()) # imprime una descripcion general rapida de los datos numeros del DataFrame
-            # print(datos.shape)      # imprime el tamanno del DataFrame
-
-
-            # Implementacion de 4. Analisis de Datos
+            # Implementacion de Analisis de Datos
 
             # Para analizar datos
             # Instanciando la clase Analizar_Datos
@@ -477,15 +437,11 @@ def main():
                     contador_filas += 1
                 else:
                     break
-        
 
         # En caso de que no se carguen los datos del CSV        
         else:
             raise ValueError
     
-
-
-
     # Excepciones
     except FileNotFoundError:
             print(f"Error: El archivo {filepath} no fue encontrado.\n")
@@ -493,8 +449,6 @@ def main():
             print(f"Error de carga: Los datos no se han cargado correctamente.")
     except Exception as e:
         print(f"Error desconocido: {e}\n")
-
-
 
 
 # Llamado de la funcion main
