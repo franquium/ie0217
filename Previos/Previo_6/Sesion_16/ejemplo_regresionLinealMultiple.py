@@ -32,7 +32,7 @@ y_pred = modelo.predict(X_test)
 
 # Parte de Graficacion
 
-#Visualizar la regresion lineal multiple
+# Visualizar la regresion lineal multiple
 fig = plt.figure(figsize=(12, 6))
 
 # Graf. 1 - Tamanno vs. Precio
