@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 import requests
-from io import StringIO  
+import os
 
 # Cargar datos
 # Obtener datos de https://raw.githubusercontent.com/ageron/handson-ml/master/datasets/housing/housing.csv
@@ -15,6 +15,10 @@ url = 'https://raw.githubusercontent.com/ageron/handson-ml/master/datasets/housi
 
 # Usando  metodo get para obtener los datos
 data_web = requests.get(url)
+
+# Condicio para crear dir 'data' en caso de que no exista
+if not os.path.exists('data'):
+    os.mkdir('data')
 
 # Se abre el archivo (o se crear en caso de no existir)
 # w: write o escribir
