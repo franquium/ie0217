@@ -16,7 +16,7 @@ url = 'https://raw.githubusercontent.com/ageron/handson-ml/master/datasets/housi
 # Usando  metodo get para obtener los datos
 data_web = requests.get(url)
 
-# Condicio para crear dir 'data' en caso de que no exista
+# Condicion para crear dir 'data' en caso de que no exista
 if not os.path.exists('data'):
     os.mkdir('data')
 
@@ -59,9 +59,9 @@ y_pred_simple = model_simple.predict(X_test)
 mse_simple = mean_squared_error(y_test, y_pred_simple)
 print(f"Error cuadrático medio (MSE) en regresión lineal simple: {mse_simple}")
 
-# -----------
-#     2
-# -----------
+# --------------------------
+#     2   (PARTE ASIGNADA)
+# --------------------------
 
 # Extrayendo los datos de las columnas de DF
 # Variables independientes
@@ -103,28 +103,35 @@ y_nonlinear = data['median_house_value'].values
 # Usando un seed pseudo aleatorio de 42
 X_train_nonlinear, X_test_nonlinear, y_train_nonlinear, y_test_nonlinear = train_test_split(X_nonlinear, y_nonlinear, test_size=0.2, random_state=42)
 
-
+# Grados del polinomio de RNL
 degree = 2
+# Crear y ajustar modelo de RNL 
 model_nonlinear = make_pipeline(PolynomialFeatures(degree), LinearRegression())
 model_nonlinear.fit(X_train_nonlinear, y_train_nonlinear)
 
-
+# Predecir datos del modelo
 y_pred_nonlinear = model_nonlinear.predict(X_test_nonlinear)
 
-
+# Calcula el Error Cuadratico Medio de RNL
 mse_nonlinear = mean_squared_error(y_test_nonlinear, y_pred_nonlinear)
 print(f"Error cuadrático medio (MSE) en regresión no lineal: {mse_nonlinear}")
 
 # -----------
 #     4
 # -----------
+# Se importan tecnicas de regulacion Lasso y Ridge para
+# evitar el sobreajuste y para mejorar el modelo
 from sklearn.linear_model import Ridge, Lasso
 
-
-model_ridge = Ridge(alpha=1.0)
+# Modelo Ridge: la penalizacion es proporcional 
+# a los valores cuadrados de los coeficientes
+# Se isntancia el modelo
+model_ridge = Ridge(alpha=1.0) # Alpha es para definir el nivel de restriccion de la regulacion
 model_ridge.fit(X_train_multi, y_train_multi)
 
-
+# Modelo Lasso: la penalizacion es proporcional 
+# a los valores absolutos de los coeficientes
+# Se isntancia el modelo
 model_lasso = Lasso(alpha=1.0)
 model_lasso.fit(X_train_multi, y_train_multi)
 
@@ -134,22 +141,30 @@ model_lasso.fit(X_train_multi, y_train_multi)
 from sklearn.cluster import KMeans, DBSCAN
 import matplotlib.pyplot as plt
 
-
+# Extraer datos de la columnas
 X_cluster = data[['longitude', 'latitude']]
 
-
+# n_cluesters: cantidad de grupos
+# n_init: para inicializar KMeans
 kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
+
+# Crear columna con los datos del entrenamiento de  prediccion del KMeans
 data['cluster_kmeans'] = kmeans.fit_predict(X_cluster)
 
-
+# eps: radio del vecindario 
+# min_samples: numero min de puntos dentro del radio para ser
+# considerado punto central y no ruido
 dbscan = DBSCAN(eps=0.5, min_samples=5)
+
+# Crear columna con los datos del entrenamiento de  prediccion del DBSCAN
 data['cluster_dbscan'] = dbscan.fit_predict(X_cluster)
 
-
+# Grafica del cluster con KMeans
 plt.scatter(data['longitude'], data['latitude'], c=data['cluster_kmeans'], cmap='viridis', marker='.')
 plt.title('Clusters usando K-means')
 plt.show()
 
+# Grafica del clusters con DBSCAN
 plt.scatter(data['longitude'], data['latitude'], c=data['cluster_dbscan'], cmap='viridis', marker='.')
 plt.title('Clusters usando DBSCAN')
 plt.show()
